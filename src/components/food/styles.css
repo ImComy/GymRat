@@ -1,0 +1,9 @@
+.Addcard:hover .nf {
+  color: #ccff00;
+  transition: color 300ms ease-in-out;
+}
+
+.Addcard:hover .text-center {
+  color: #ccff00;
+  transition: color 300ms ease-in-out;
+}
