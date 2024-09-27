@@ -5,32 +5,46 @@ import { RootState } from '../../app/store';
 const MealStats = () => {
   const meals = useSelector((state: RootState) => state.meals.meals);
 
+  const [protein, setProtein] = useState(0);
+  const [calories, setCalories] = useState(0);
+  const [carbs, setCarbs] = useState(0);
+  const [fats, setFats] = useState(0);
+
   const [updatedProtein, setUpdatedProtein] = useState(0);
   const [updatedCalories, setUpdatedCalories] = useState(0);
   const [updatedCarbs, setUpdatedCarbs] = useState(0);
   const [updatedFats, setUpdatedFats] = useState(0);
 
   const calculateTableTotals = () => {
-    return meals.reduce((acc, meal) => {
-      if (meal.isAdded) {
-        acc.protein += parseInt(meal.protein || '0');
-        acc.carbs += parseInt(meal.carbs || '0');
-        acc.fats += parseInt(meal.fats || '0');
-        acc.calories += parseInt(meal.calories || '0');
-      }
-      return acc;
-    }, { protein: 0, carbs: 0, fats: 0, calories: 0 });
+    return meals.reduce(
+      (acc, meal) => {
+        if (meal.isAdded) {
+          const amountRatio = (meal.amount || 100) / 100;
+          acc.protein += parseInt(meal.protein || '0') * amountRatio;
+          acc.carbs += parseInt(meal.carbs || '0') * amountRatio;
+          acc.fats += parseInt(meal.fats || '0') * amountRatio;
+          acc.calories += parseInt(meal.calories || '0') * amountRatio;
+        }
+        return acc;
+      },
+      { protein: 0, carbs: 0, fats: 0, calories: 0 }
+    );
   };
 
-  const calculateProgressTotals = () => {
+  useEffect(() => {
     const totals = calculateTableTotals();
-    setUpdatedProtein(totals.protein);
-    setUpdatedCarbs(totals.carbs);
-    setUpdatedFats(totals.fats);
-    setUpdatedCalories(totals.calories);
-  };
+    setProtein(totals.protein);
+    setCarbs(totals.carbs);
+    setFats(totals.fats);
+    setCalories(totals.calories);
+  }, [meals]);
 
-  const tableTotals = calculateTableTotals();
+  const updateProgress = () => {
+    setUpdatedProtein(protein);
+    setUpdatedCarbs(carbs);
+    setUpdatedFats(fats);
+    setUpdatedCalories(calories);
+  };
 
   return (
     <div className="w-[428px] bg-[#f9f9f9] rounded-[20px] shadow flex flex-col font-['Inter']">
@@ -43,19 +57,27 @@ const MealStats = () => {
           <tbody>
             <tr>
               <td className="py-2 text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Protein</td>
-              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">{tableTotals.protein}g</td>
+              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
+                {protein.toFixed(1)}g
+              </td>
             </tr>
             <tr>
               <td className="py-2 text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Carbs</td>
-              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">{tableTotals.carbs}g</td>
+              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
+                {carbs.toFixed(1)}g
+              </td>
             </tr>
             <tr>
               <td className="py-2 text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Fats</td>
-              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">{tableTotals.fats}g</td>
+              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
+                {fats.toFixed(1)}g
+              </td>
             </tr>
             <tr>
               <td className="py-2 text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Calories</td>
-              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">{tableTotals.calories}kcal</td>
+              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
+                {calories.toFixed(1)}kcal
+              </td>
             </tr>
           </tbody>
         </table>
@@ -63,7 +85,7 @@ const MealStats = () => {
 
       <div className="flex justify-center mt-auto mb-6">
         <button
-          onClick={calculateProgressTotals}
+          onClick={updateProgress}
           className="w-[171px] py-3 bg-[#ccff00] rounded-lg text-center text-black font-bold hover:bg-lime-400 hover:scale-105 transition duration-300"
         >
           Update
@@ -98,7 +120,7 @@ const ProgressBar = ({ label, value, max }: ProgressBarProps) => {
           ></div>
         </div>
       </div>
-      <div className="text-right text-sm text-[#676767]">{`${value}/${max}`}</div>
+      <div className="text-right text-sm text-[#676767]">{`${value.toFixed(1)}/${max}`}</div>
     </div>
   );
 };

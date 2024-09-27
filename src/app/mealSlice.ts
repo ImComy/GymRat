@@ -10,6 +10,7 @@ interface Meal {
   fats?: string;
   carbs?: string;
   isAdded?: boolean;
+  amount?: number;
 }
 
 interface MealState {
@@ -45,9 +46,14 @@ const mealSlice = createSlice({
         state.meals[index] = action.payload;
       }
     },
+    updateMealAmount: (state, action: PayloadAction<{ _id: string; amount: number }>) => {
+      const meal = state.meals.find(meal => meal._id === action.payload._id);
+      if (meal) {
+        meal.amount = action.payload.amount;
+      }
+    },
   },
 });
 
-export const { addMeal, removeMeal, createMeal, updateMeal } = mealSlice.actions;
+export const { addMeal, removeMeal, createMeal, updateMeal, updateMealAmount } = mealSlice.actions;
 export default mealSlice.reducer;
-

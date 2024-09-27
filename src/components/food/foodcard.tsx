@@ -33,6 +33,8 @@ const Card: React.FC<Props> = ({ _id, image, title, calories, protein, fats, car
   };
 
   const placeholderImage = 'https://via.placeholder.com/276x177';
+  const isTitleLong = title.length > 15;
+  const isTitleTooLong = title.length > 19;
 
   return (
     <div className="w-[276px] h-[321px] relative bg-white rounded-[5px] shadow transition duration-300 ease-in-out hover:scale-105 overflow-hidden group">
@@ -41,8 +43,10 @@ const Card: React.FC<Props> = ({ _id, image, title, calories, protein, fats, car
         src={image || placeholderImage}
         alt={title}
       />
-      <div className="flex justify-center items-center h-[51px] bg-white absolute top-[177px] left-0 right-0 transition-transform duration-500 ease-in-out group-hover:translate-y-[-150px] group-hover:translate-x-[-70px]">
-        <div className="text-center text-black text-3xl font-extrabold font-['Inter'] leading-7">{title}</div>
+      <div className={`flex justify-center items-center h-[51px] bg-white absolute top-[177px] left-0 right-0 transition-transform duration-500 ease-in-out group-hover:translate-y-[-150px] ${isTitleLong ? 'group-hover:translate-x-[-70px]' : 'group-hover:translate-x-[-50px]'} ${isTitleTooLong ? 'group-hover:translate-x-[-46px] mt-3 group-hover:mt-0' : 'group-hover:translate-x-[-50px]'}`}>
+        <div className={`text-center text-black ${isTitleLong ? 'text-2xl group-hover:text-sm' : 'text-3xl group-hover:text-xl'} font-extrabold font-['Inter'] leading-7 transition-all duration-300 ease-in-out`}>
+          {title}
+        </div>
       </div>
       <div className="text-center text-[#3a3a3a] text-lg font-medium font-['Inter'] absolute opacity-0 group-hover:opacity-100 transition-opacity duration-400 ease-in-out right-5 top-9"> per 100g </div>
       <table className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-400 ease-in-out w-[250px] h-[170px] top-20 text-[#3a3a3a] text-lg font-medium font-['Inter'] display-block mx-4">
