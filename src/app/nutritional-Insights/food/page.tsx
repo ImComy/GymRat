@@ -79,7 +79,6 @@ const Food = () => {
 
         <section>
           <MealCardList
-            searchQuery={searchQuery}
             selectedOption={selectedOption}
             sortOrder={sortOrder}
           />

@@ -45,50 +45,49 @@ const MealCard: React.FC<MealCardProps> = ({ meal }) => {
   };
 
   return (
-    <main className="w-[328px] h-[310px] bg-white rounded-[5px] flex flex-col items-start shadow transition duration-300 ease-in-out hover:scale-105 overflow-hidden">
-      <div className="relative w-full h-[116px] bg-white">
+    <section className="w-[740px] h-[150px] relative rounded-[23px] border border-black flex justify-between items-start shadow transition duration-300 ease-in-out hover:scale-105">
+      <article className="relative w-[298px] h-[150] bg-white rounded-l-[23px] overflow-hidden shadow-md">
         <img
           className="w-full h-full object-cover"
-          src={meal.image || 'https://via.placeholder.com/333x116'}
+          src={meal.image || 'https://via.placeholder.com/298x150'}
           alt={meal.title}
         />
         <div className="absolute inset-0 bg-black/40"></div>
-        <h2 className="absolute inset-0 flex justify-center items-center text-white text-2xl font-extrabold">
+        <h2 className="absolute inset-0 flex items-center justify-center text-white text-3xl font-extrabold">
           {meal.title}
         </h2>
-      </div>
+      </article>
 
-      <div className="w-full flex flex-col items-start px-4 py-2 space-y-2">
-        <div className="flex w-full gap-4">
-          <label className="text-lg font-extrabold text-black">Amount</label>
+      <div className="flex flex-col justify-between items-center flex-grow p-4">
+        <section className="flex mr-24">
+          <label className="text-black text-lg font-extrabold mr-6">Amount</label>
           <input
             type="number"
             value={amount}
             onChange={handleAmountChange}
-            className="w-36 text-center text-lg font-medium text-black border px-3"
-            placeholder="100"
+            className="w-24 text-center text-lg font-medium text-black border border-gray-300 px-3 rounded-lg"
           />
-          <span className="text-lg font-medium text-black">g</span>
-        </div>
-        <div className="flex gap-20 py-3">
-          <div className="flex flex-col gap-3">
-            <div className="text-md text-[#626262] leading-[14.40px]">Fats: {calculateNutrient(meal.fats)}g</div>
-            <div className="text-md text-[#626262] leading-[14.40px]">Protein: {calculateNutrient(meal.protein)}g</div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <div className="text-md text-[#626262] leading-[14.40px]">Carbs: {calculateNutrient(meal.carbs)}g</div>
-            <div className="text-md text-[#626262] leading-[14.40px]">Calories: {calculateNutrient(meal.calories)}kcal</div>
-          </div>
-        </div>
+          <span className="text-lg font-medium text-black">&nbsp;g</span>
+        </section>
 
-        <button
-          onClick={handleRemove}
-          className="w-full py-2 bg-black text-white text-sm font-extrabold rounded-xl hover:bg-red-600 hover:scale-105 transition duration-300"
-        >
-          Remove
-        </button>
+        <section className="flex justify-between mt-4 gap-x-9">
+          <div className="flex flex-col items-start space-y-2">
+            <span className="text-black font-bold ">Fats: <span className="text-gray-700 text-md font-semibold px-3">{calculateNutrient(meal.fats)}&nbsp;g</span></span>
+            <span className="text-black font-bold ">Protein: <span className="text-gray-700 text-md font-semibold px-3">{calculateNutrient(meal.protein)}&nbsp;g</span></span>
+          </div>
+          <div className="flex flex-col items-start space-y-2">
+            <span className="text-black font-bold ">Carbs: <span className="text-gray-700 text-md font-semibold px-3">{calculateNutrient(meal.carbs)}&nbsp;g</span></span>
+            <span className="text-black font-bold ">Calories: <span className="text-gray-700 text-md font-semibold px-3">{calculateNutrient(meal.calories)}&nbsp;kcal</span></span>
+          </div>
+        </section>
       </div>
-    </main>
+
+      <button
+        onClick={handleRemove}
+        className="absolute top-[-5px] right-[-10px] w-10 h-10 text-2xl flex items-center justify-center text-center text-white bg-black rounded-full hover:bg-red-600 transition-transform duration-300 transform hover:scale-110 shadow-lg">
+        <span className="nf nf-oct-x"></span>
+      </button>
+    </section>
   );
 };
 

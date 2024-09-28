@@ -6,12 +6,11 @@ import { RootState } from '../../app/store';
 import { addMeal } from '../../app/mealSlice';
 
 interface MealCardListProps {
-  searchQuery: string;
   selectedOption: string;
   sortOrder: 'asc' | 'desc';
 }
 
-const MealCardList: React.FC<MealCardListProps> = ({ searchQuery, selectedOption, sortOrder }) => {
+const MealCardList: React.FC<MealCardListProps> = ({ selectedOption, sortOrder }) => {
   const meals = useSelector((state: RootState) => state.meals.meals);
   const dispatch = useDispatch();
 
@@ -19,11 +18,7 @@ const MealCardList: React.FC<MealCardListProps> = ({ searchQuery, selectedOption
     dispatch(addMeal(id));
   };
 
-  const filteredMeals = meals.filter(meal => {
-    return meal.title.includes(searchQuery);
-  });
-
-  const sortedMeals = [...filteredMeals].sort((a, b) => {
+  const sortedMeals = [...meals].sort((a, b) => {
     if (sortOrder === 'asc') {
       return a.title.localeCompare(b.title);
     } else {
@@ -34,8 +29,8 @@ const MealCardList: React.FC<MealCardListProps> = ({ searchQuery, selectedOption
   const addedMeals = sortedMeals.filter(meal => meal.isAdded);
 
   return (
-    <main className="flex justify-between mt-10">
-      <section className="grid grid-cols-2 w-2/3 gap-3">
+    <main className="flex justify-between mt-10 gap-12">
+      <section className="flex flex-col gap-y-5">
         {addedMeals.length > 0 ? (
           addedMeals.map(meal => (
             <MealCard
@@ -46,13 +41,13 @@ const MealCardList: React.FC<MealCardListProps> = ({ searchQuery, selectedOption
             />
           ))
         ) : (
-          <div className="col-span-2 text-center text-gray-500 text-lg">
+          <div className="text-center text-gray-500 text-lg ml-20">
             No meals have been added yet. Please add meals to see them here.
           </div>
         )}
       </section>
 
-      <aside className="w-1/3">
+      <aside className="">
         <MealStats />
       </aside>
     </main>

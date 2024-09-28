@@ -15,6 +15,8 @@ const MealStats = () => {
   const [updatedCarbs, setUpdatedCarbs] = useState(0);
   const [updatedFats, setUpdatedFats] = useState(0);
 
+  const [lastUpdatedDate, setLastUpdatedDate] = useState(new Date().toDateString());
+
   const calculateTableTotals = () => {
     return meals.reduce(
       (acc, meal) => {
@@ -39,11 +41,30 @@ const MealStats = () => {
     setCalories(totals.calories);
   }, [meals]);
 
+  useEffect(() => {
+    const currentDate = new Date().toDateString();
+    const savedDate = localStorage.getItem('lastUpdatedDate');
+
+    if (savedDate !== currentDate) {
+      setUpdatedProtein(0);
+      setUpdatedCarbs(0);
+      setUpdatedFats(0);
+      setUpdatedCalories(0);
+      setLastUpdatedDate(currentDate);
+      localStorage.setItem('lastUpdatedDate', currentDate);
+    }
+  }, []);
+
   const updateProgress = () => {
-    setUpdatedProtein(protein);
-    setUpdatedCarbs(carbs);
-    setUpdatedFats(fats);
-    setUpdatedCalories(calories);
+    setUpdatedProtein((prev) => Math.max(prev, protein));
+    setUpdatedCarbs((prev) => Math.max(prev, carbs));
+    setUpdatedFats((prev) => Math.max(prev, fats));
+    setUpdatedCalories((prev) => Math.max(prev, calories));
+
+    localStorage.setItem('updatedProtein', updatedProtein.toString());
+    localStorage.setItem('updatedCarbs', updatedCarbs.toString());
+    localStorage.setItem('updatedFats', updatedFats.toString());
+    localStorage.setItem('updatedCalories', updatedCalories.toString());
   };
 
   return (
@@ -109,14 +130,21 @@ interface ProgressBarProps {
 }
 
 const ProgressBar = ({ label, value, max }: ProgressBarProps) => {
+  const progressPercentage = (value / max) * 100;
+  const progressColor = progressPercentage >= 100 ? '#ff0000' : '#ccff00';
+
   return (
     <div>
       <div className="flex flex-col gap-2">
         <label className="block text-sm font-semibold text-black ml-3">{label}</label>
         <div className="w-full h-6 bg-[#d9d9d9] rounded-full overflow-hidden">
           <div
-            className="h-full bg-[#ccff00] rounded-full transition-all duration-500 ease-in-out"
-            style={{ width: `${(value / max) * 100}%` }}
+            className="h-full rounded-full transition-all duration-500 ease-in-out"
+            style={{
+              width: `${progressPercentage}%`,
+              backgroundColor: progressColor,
+              transition: 'background-color 0.5s ease, width 0.5s ease'
+            }}
           ></div>
         </div>
       </div>
@@ -124,5 +152,6 @@ const ProgressBar = ({ label, value, max }: ProgressBarProps) => {
     </div>
   );
 };
+
 
 export default MealStats;
