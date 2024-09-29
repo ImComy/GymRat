@@ -6,7 +6,11 @@ interface CardData {
   type: string;
 }
 
-const Slider: React.FC = () => {
+interface SliderProps {
+  onViewDetails: (name: string, type: string) => void;
+}
+
+const Slider: React.FC<SliderProps> = ({ onViewDetails }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const numSlides = 3;
 
@@ -46,7 +50,7 @@ const Slider: React.FC = () => {
     return (
       <div className="grid grid-cols-3 gap-4">
         {selectedCards.map((card, index) => (
-          <Card key={index} name={card.name} type={card.type} />
+          <Card key={index} name={card.name} type={card.type} onViewDetails={() => onViewDetails(card.name, card.type)}/>
         ))}
       </div>
     );
@@ -54,7 +58,7 @@ const Slider: React.FC = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-center w-full">
-      <div className="relative flex items-center w-full">
+      <div className=" flex items-center w-full">
         <button
           onClick={handlePrevSlide}
           className="text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute left-[-100px] z-10">
