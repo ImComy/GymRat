@@ -48,7 +48,7 @@ const MealCard: React.FC<MealCardProps> = ({ meal }) => {
     <section className="w-[740px] h-[150px] relative rounded-[23px] border border-black flex justify-between items-start shadow transition duration-300 ease-in-out hover:scale-105">
       <article className="relative w-[298px] h-[150] bg-white rounded-l-[23px] overflow-hidden shadow-md">
         <img
-          className="w-full h-full object-cover"
+          className="w-full h-[148px] object-cover"
           src={meal.image || 'https://via.placeholder.com/298x150'}
           alt={meal.title}
         />

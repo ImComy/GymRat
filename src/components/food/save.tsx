@@ -69,7 +69,7 @@ const SaveMeals = () => {
   return (
     <div className="flex gap-10">
       <button
-        className="w-[214px] h-[53px] px-[19.14px] py-[8.61px] bg-gradient-to-r from-[#bfff00] to-[#ccff00] rounded-[9.57px] border border-black justify-center items-center gap-[9.57px] inline-flex transition duration-300 ease-in-out hover:scale-105 active:scale-100"
+        className="w-[214px] h-[53px] px-[19.14px] py-[8.61px] bg-gradient-to-r from-[#bfff00] to-[#ccff00] rounded-[9.57px] justify-center items-center gap-[9.57px] inline-flex transition duration-300 ease-in-out hover:scale-105 active:scale-100"
         onClick={handleSaveMealClick}
       >
         <span className="text-center text-black text-xl font-bold">Save Meal</span>

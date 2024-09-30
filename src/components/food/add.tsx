@@ -104,13 +104,17 @@ const Addcard = () => {
       </button>
 
       {showPopup && (
-        <div
-          className={`fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-10 ${
-            isClosing ? 'animate-fade-out' : 'animate-fade-in'
-          }`}
-          onClick={handleOutsideClick}
-        >
-          <div className={`relative w-[350px] bg-white rounded-lg shadow-lg p-6 popup transition-all duration-300 ease-out mt-14 ${isClosing ? 'animate-popup-close' : 'animate-popup-open'}`}>
+            <div
+      className={`fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-10 ${
+        isClosing ? 'animate-fade-out' : 'animate-fade-in'
+      }`}
+      onClick={handleOutsideClick}
+    >
+      <div
+        className={`relative w-[350px] bg-white rounded-lg shadow-lg p-6 popup transition-all duration-300 ease-out mt-14 ${
+          isClosing ? 'animate-popup-close' : 'animate-popup-open'
+        }`}
+      >
             <button
               className="absolute top-0 right-[-10px] text-2xl text-gray-500 hover:text-gray-800 transition duration-200 bg-white rounded-[100%] px-2 hover:bg-red-500"
               onClick={handleClosePopup}

@@ -103,49 +103,48 @@ export default function Home() {
 
       <section
         ref={sectionRef}
-        className={`bg-white w-screen h-auto relative flex flex-col md:flex-row center overflow-hidden`}
+        className={`bg-white w-screen h-auto relative flex flex-col md:flex-row center overflow-hidden items-center sm:items-center`}
       >
         <div
-          className={`flex flex-col items-center md:items-center gap-6 p-10 md:p-20 invisible z-[2] ${
+          className={`flex flex-col items-center gap-6 p-10 md:p-20 invisible z-[2] ${
             animateSection ? "slide-up" : ""
           }`}
         >
-          <div className="ml-[-40px]">
-            <span className="text-black text-6xl sm:text-7xl md:text-[80px] font-black leading-tight md:leading-[72px]">
+          <div className="lg:ml-[-130px] md:ml-[-130px]">
+            <span className="text-black text-[50px] sm:text-6xl font-black leading-tight md:leading-[72px] ">
               Track your <br/>
             </span>
-            <span className="text-[#ccff00] text-6xl sm:text-7xl md:text-[80px] font-black leading-tight md:leading-[72px]">
+            <span className="text-[#ccff00] text-[50px] sm:text-7xl font-black leading-tight md:leading-[72px]">
               Workouts
             </span>
           </div>
 
-          <div className="">
+          <div className="mr-[-20px] sm:mr-[0px]">
             <span className="text-[#515151] text-lg sm:text-xl md:text-[22px] font-medium leading-relaxed tracking-wide">
-              At the press of a button, you can get your <br/>
+              At the press of a button, you can get your
             </span>
-            <span className="text-[#515151] text-lg sm:text-xl md:text-[22px] font-extrabold leading-relaxed tracking-wide">
-              entire workout history
+            <span className="text-[#515151] text-lg sm:text-xl md:text-[22px] font-extrabold leading-relaxed ">
+              &nbsp;entire workout history
             </span>
             <span className="text-[#515151] text-lg sm:text-xl md:text-[22px] font-medium leading-relaxed tracking-wide">
-              including <br/>Weights, Sets and Reps
+              &nbsp;including <br/>Weights, Sets and Reps
             </span>
           </div>
 
           <a href="./workouts">
-            <div className="transition duration-300 ease-in-out hover:scale-105 mt-20 invisible">
+            <div className="transition duration-300 ease-in-out hover:scale-105 mt-20 invisible md:visible">
               <button
-                className={`w-[439px] h-[83px] px-[58px] py-6 bg-[#ccff00] rounded-[28.13px] justify-between items-center inline-flex text-black text-[37.51px] font-extrabold hover:bg-black hover:text-white  ${
-                  animateSection ? "slide-in-left" : ""
-                }`}
-               >
+                className={`w-full sm:w-[350px] md:w-[439px] h-[55px] sm:h-[75px] md:h-[83px] px-[35px] sm:px-[45px] md:px-[58px] py-4 sm:py-5 md:py-6 bg-[#ccff00] rounded-[22px] sm:rounded-[26px] md:rounded-[28.13px] justify-between items-center inline-flex text-[24px] sm:text-[32px] md:text-[37.51px] text-black font-extrabold hover:bg-black hover:text-white ${animateSection ? "slide-in-left" : ""}`}>
                 START NOW <span className="nf nf-fa-angle_right"></span>
               </button>
-            </div>
-          </a>
+           </div>
+         </a>
+
+
         </div>
 
         <div className="z-[1] w-screen ">
-          <div className="absolute top-[-10%] right-[58.5%]">
+          <div className="absolute top-[-40%] right-[120%] sm:top-[-10%]  sm:right-[58.5%]">
             <svg width="850" height="700" viewBox="0 0 979 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-[-20px] left-[-50px]">
             <path d="M1138 21.0454C1081.45 6.36947 943.178 -11.4813 842.475 34.5234C716.595 92.0292 615.308 347.661 471.505 351.255C423.015 410.258 296.941 528.894 180.565 531.41C35.0951 534.555 64.2725 652.262 3 690" stroke="#CCFF00" strokeWidth="9"/>
             </svg>
@@ -246,19 +245,23 @@ export default function Home() {
             Your Gallery
           </h1>
         </div>
-        <div className=" text-[#3a3a3a] text-xl font-medium font-['Roboto'] leading-[18px] whitespace-nowrap">
+        <div className=" text-[#3a3a3a] text-md sm:text-xl font-medium font-['Roboto'] leading-[18px] whitespace-nowrap mt-3 sm-mt-0">
           Track your true progress by taking progress photos <br/> and inputing your body weight.
         </div>
-        <div className="transition duration-300 ease-in-out hover:scale-105 mt-20 invisible">
-          <button
-            className={`w-[439px] h-[83px] px-[58px] py-6 bg-black rounded-[28.13px] justify-between items-center inline-flex text-white text-[37.51px] font-extrabold hover:bg-[#ccff00] hover:text-black transition duration-300 ease-in-out hover:scale-105 invisible mt-10 ${animateSection3 ? "slide-in-left" : ""}`}>
-            Upload NOW <span className="nf nf-fa-angle_right"></span>
-          </button>
-        </div>
+<div className="transition duration-300 ease-in-out hover:scale-105 mt-20 invisible md:visible">
+  <button
+    className={`w-full sm:w-[350px] md:w-[439px] h-[60px] sm:h-[70px] md:h-[83px] px-[30px] sm:px-[45px] md:px-[58px] py-4 sm:py-5 md:py-6 bg-black rounded-[20px] sm:rounded-[25px] md:rounded-[28.13px] justify-between items-center inline-flex text-[22px] sm:text-[30px] md:text-[37.51px] font-extrabold text-white hover:bg-[#ccff00] hover:text-black transition duration-300 ease-in-out hover:scale-105 invisible mt-10 p-5 sm:p-0 ${
+      animateSection3 ? "slide-in-left" : ""
+    }`}
+  >
+    Upload NOW <span className="nf nf-fa-angle_right"></span>
+  </button>
+</div>
+
       </div>
 
         <div className="z-1 w-screen ">
-          <div className="absolute">
+          <div className="absolute top-0 right-20 sm:top-auto sm:right-auto">
             <svg width="1305" height="584" viewBox="0 0 1005 584" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute sm:block right-[-800px]">
               <path d="M1003 -1.31488C933.398 -17.4906 763.206 -37.1655 639.257 13.5404C484.319 76.9227 359.651 358.677 182.654 362.638C122.97 427.671 -32.2062 558.43 -175.446 561.203C-354.496 564.67 -318.584 694.405 -394 736" stroke="#CCFF00" strokeWidth="9"/>
             </svg>

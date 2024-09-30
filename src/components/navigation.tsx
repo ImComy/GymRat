@@ -75,82 +75,84 @@ export default function Navigation() {
       <div
         className={`${
           isMobileMenuOpen ? "block" : "hidden"
-        } lg:flex flex-col lg:flex-row lg:space-x-8 lg:items-center w-full lg:w-auto absolute lg:static left-0 top-full bg-lime-500 lg:bg-transparent lg:space-y-0 space-y-4 lg:p-0 p-6 transition-all duration-300 ease-in-out`}
+        } lg:flex flex-col lg:flex-row lg:space-x-8 lg:items-center w-full lg:w-auto absolute lg:static left-0 top-full bg-[#ccff00] lg:bg-transparent lg:space-y-0 space-y-4 lg:p-0 p-6 transition-all duration-300 ease-in-out`}
       >
-        <ul className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-8">
-          <li className="text-center text-black text-[1.25rem] font-bold font-['Inter'] leading-snug">
-            <Link href="/" className={getLinkStyle('/')} onClick={closeMobileMenu}>
-              Home
-            </Link>
-          </li>
-          <li className="relative group">
-            <button
-              onClick={toggleDropdown}
-              className="text-black font-semibold hover:text-black flex items-center space-x-1 text-[1.25rem]"
-            >
-              Nutrition
-              <span
-                className={`fas fa-angle-down ml-2 transition-transform duration-300 ${
-                  isDropdownOpen ? 'rotate-180' : 'rotate-0'
+        <div className="flex flex-col lg:flex-row lg:space-x-8 lg:items-center justify-center lg:justify-between w-full">
+          <ul className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-8 justify-center items-center lg:items-start">
+            <li className="text-center text-black text-[1.25rem] font-bold font-['Inter'] leading-snug">
+              <Link href="/" className={getLinkStyle('/')} onClick={closeMobileMenu}>
+                Home
+              </Link>
+            </li>
+            <li className="relative group">
+              <button
+                onClick={toggleDropdown}
+                className="text-black font-semibold hover:text-black flex items-center space-x-1 text-[1.25rem]"
+              >
+                Nutrition
+                <span
+                  className={`fas fa-angle-down ml-2 transition-transform duration-300 ${
+                    isDropdownOpen ? 'rotate-180' : 'rotate-0'
+                  }`}
+                ></span>
+              </button>
+
+              <ul
+                className={`absolute left-0 bg-[#ccff00] text-black font-semibold space-y-1 transition-all duration-300 ease-in-out transform ${
+                  isDropdownOpen
+                    ? 'opacity-100 translate-y-0 visible'
+                    : 'opacity-0 -translate-y-3 invisible'
                 }`}
-              ></span>
-            </button>
+              >
+                <li>
+                  <Link
+                    href="/nutritional-Insights/food"
+                    className="block px-4 py-1 hover:bg-black hover:text-[#ccff00]"
+                    onClick={() => {
+                      closeDropdown();
+                      closeMobileMenu();
+                    }}
+                  >
+                    Food
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="#"
+                    className="block px-4 py-1 hover:bg-black hover:text-[#ccff00]"
+                    onClick={() => {
+                      closeDropdown();
+                      closeMobileMenu();
+                    }}
+                  >
+                    Option 2
+                  </Link>
+                </li>
+              </ul>
+            </li>
+            <li className="text-center text-black text-[1.25rem] font-bold font-['Inter'] leading-snug">
+              <Link href="/gallery" className={getLinkStyle('/gallery')} onClick={closeMobileMenu}>
+                Gallery
+              </Link>
+            </li>
+            <li className="text-center text-black text-[1.25rem] font-bold font-['Inter'] leading-snug">
+              <Link href="/workouts" className={getLinkStyle('/workouts')} onClick={closeMobileMenu}>
+                Workouts
+              </Link>
+            </li>
+          </ul>
 
-            <ul
-              className={`absolute left-0 bg-[#ccff00] text-black font-semibold space-y-1 transition-all duration-300 ease-in-out transform ${
-                isDropdownOpen
-                  ? 'opacity-100 translate-y-0 visible'
-                  : 'opacity-0 -translate-y-3 invisible'
-              }`}
+          <div className="mt-4 lg:mt-0 flex justify-center items-center lg:justify-start">
+            <Link
+              href="/login"
+              className="w-[5.5rem] h-[2.5rem] px-[1rem] py-[0.5rem] bg-black rounded-[0.625rem] justify-center items-center inline-flex hover:bg-gray-800 hover:scale-105 transition duration-300"
+              onClick={closeMobileMenu}
             >
-              <li>
-                <Link
-                  href="/nutritional-Insights/food"
-                  className="block px-4 py-1 hover:bg-black hover:text-[#ccff00]"
-                  onClick={() => {
-                    closeDropdown();
-                    closeMobileMenu(); // Close mobile menu if it's open
-                  }}
-                >
-                  Food
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="block px-4 py-1 hover:bg-black hover:text-[#ccff00]"
-                  onClick={() => {
-                    closeDropdown();
-                    closeMobileMenu();
-                  }}
-                >
-                  Option 2
-                </Link>
-              </li>
-            </ul>
-          </li>
-          <li className="text-center text-black text-[1.25rem] font-bold font-['Inter'] leading-snug">
-            <Link href="/gallery" className={getLinkStyle('/gallery')} onClick={closeMobileMenu}>
-              Gallery
+              <span className="text-center text-white text-lg font-bold leading-[1.5rem]">
+                Join
+              </span>
             </Link>
-          </li>
-          <li className="text-center text-black text-[1.25rem] font-bold font-['Inter'] leading-snug">
-            <Link href="/workouts" className={getLinkStyle('/workouts')} onClick={closeMobileMenu}>
-              Workouts
-            </Link>
-          </li>
-        </ul>
-
-        <div className="mr-4 pr-5">
-          <Link
-            href="/login"
-            className="w-[5.5rem] h-[2.5rem] px-[1rem] py-[0.5rem] bg-black rounded-[0.625rem] justify-center items-center inline-flex hover:bg-gray-800 hover:scale-105 transition duration-300"
-            onClick={closeMobileMenu}
-          >
-            <span className="text-center text-white text-lg font-bold leading-[1.5rem]">
-              Join
-            </span>
-          </Link>
+          </div>
         </div>
       </div>
     </nav>

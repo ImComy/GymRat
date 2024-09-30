@@ -37,7 +37,7 @@ const SearchFood: React.FC<SearchFoodProps> = ({ onSearch }) => {
   }, [searchQuery, selectedOption, sortOrder]);
 
   return (
-    <div className='flex gap-10 mt-5 items-center border rounded-full'>
+    <div className='flex gap-10 mt-5 items-center border rounded-full flex-col md:flex-row'>
       <div className="cursor-pointer coupons-select-container relative w-[120px] ml-6">
         <div
           className={`coupons-select ${isOpen ? 'open' : ''} flex items-center justify-between w-full py-2 pl-3 pr-10 text-sm text-gray-700 rounded-md`}

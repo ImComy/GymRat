@@ -56,15 +56,15 @@ const MealStats = () => {
   }, []);
 
   const updateProgress = () => {
-    setUpdatedProtein((prev) => Math.max(prev, protein));
-    setUpdatedCarbs((prev) => Math.max(prev, carbs));
-    setUpdatedFats((prev) => Math.max(prev, fats));
-    setUpdatedCalories((prev) => Math.max(prev, calories));
+    setUpdatedProtein((prev) => prev + protein);
+    setUpdatedCarbs((prev) => prev + carbs);
+    setUpdatedFats((prev) => prev + fats);
+    setUpdatedCalories((prev) => prev + calories);
 
-    localStorage.setItem('updatedProtein', updatedProtein.toString());
-    localStorage.setItem('updatedCarbs', updatedCarbs.toString());
-    localStorage.setItem('updatedFats', updatedFats.toString());
-    localStorage.setItem('updatedCalories', updatedCalories.toString());
+    localStorage.setItem('updatedProtein', (updatedProtein + protein).toString());
+    localStorage.setItem('updatedCarbs', (updatedCarbs + carbs).toString());
+    localStorage.setItem('updatedFats', (updatedFats + fats).toString());
+    localStorage.setItem('updatedCalories', (updatedCalories + calories).toString());
   };
 
   return (

@@ -70,18 +70,17 @@ const Food = () => {
           />
         </section>
 
-        <section className="mt-10">
-          <header className="flex items-center justify-between">
-            <h1 className="text-black text-[80px] font-black font-['Inter'] leading-[72px]">Meal</h1>
-            <SaveMeals />
+        <section className="mt-10 px-4 md:px-8">
+          <header className="flex flex-col md:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0">
+            <h1 className="text-black text-5xl sm:text-6xl md:text-[72px] lg:text-[80px] font-black font-['Inter'] leading-tight sm:leading-tight md:leading-[72px]">Meal</h1>
+            <div className="md:ml-4">
+              <SaveMeals />
+            </div>
           </header>
         </section>
 
         <section>
-          <MealCardList
-            selectedOption={selectedOption}
-            sortOrder={sortOrder}
-          />
+          <MealCardList selectedOption={selectedOption} sortOrder={sortOrder} />
         </section>
       </main>
     </Provider>

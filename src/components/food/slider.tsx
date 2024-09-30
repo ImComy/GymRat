@@ -60,19 +60,19 @@ const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder 
     });
 
   return (
-    <div className="w-full mx-auto flex justify-center items-center relative">
+    <div className="w-full flex justify-center items-center relative">
       <button
-        className="bg-transparent border-none cursor-pointer outline-none flex items-center justify-center text-3xl z-9 mr-5"
+        className="bg-transparent border-none cursor-pointer outline-none flex items-center justify-center text-3xl z-9 mr-5 hidden md:block lg:block"
         onClick={() => scroll('left')}
       >
         <span className="nf nf-fa-arrow_circle_left text-3xl text-[#ccff00]" />
       </button>
       <animated.div
-        className="overflow-x-scroll p-5"
+        className="overflow-x-scroll p-2 sm:p-5 w-full"
         ref={scrollContainerRef}
         scrollLeft={props.scrollLeft}
       >
-        <div className="flex flex-start items-center gap-12 no-wrap">
+        <div className="flex flex-start items-center gap-4 sm:gap-12 no-wrap w-full">
           <div>
             <Addcard />
           </div>
@@ -84,7 +84,7 @@ const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder 
         </div>
       </animated.div>
       <button
-        className="bg-transparent border-none cursor-pointer outline-none flex items-center justify-center text-3xl z-9 ml-10"
+        className="bg-transparent border-none cursor-pointer outline-none flex items-center justify-center text-3xl z-9 ml-5 hidden md:block lg:block"
         onClick={() => scroll('right')}
       >
         <span className="nf nf-fa-arrow_circle_right text-3xl text-[#ccff00]" />
