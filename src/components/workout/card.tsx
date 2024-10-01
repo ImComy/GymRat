@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 
-const ExerciseCard = () => {
-  const [numSets, setNumSets] = useState(4);
-  const [sets, setSets] = useState([
+interface Set {
+  id: number;
+  reps: string;
+  weight: string;
+}
+
+const ExerciseCard: React.FC = () => {
+  const [numSets, setNumSets] = useState<number>(4);
+  const [sets, setSets] = useState<Set[]>([
     { id: 1, reps: '', weight: '' },
     { id: 2, reps: '', weight: '' },
     { id: 3, reps: '', weight: '' },
     { id: 4, reps: '', weight: '' },
   ]);
 
-  const handleNumSetsChange = (value) => {
+  const handleNumSetsChange = (value: string) => {
     const newNumSets = parseInt(value) || 0;
     setNumSets(newNumSets);
 
@@ -25,7 +31,7 @@ const ExerciseCard = () => {
     }
   };
 
-  const handleInputChange = (id, field, value) => {
+  const handleInputChange = (id: number, field: keyof Set, value: string) => {
     setSets(sets.map(set => (set.id === id ? { ...set, [field]: value } : set)));
   };
 
@@ -73,7 +79,6 @@ const ExerciseCard = () => {
         ))}
       </div>
 
-
       <div className="p-4 space-y-2">
         <button className="w-full bg-[#ccff00] text-black py-2 rounded-md font-bold hover:bg-white hover:text-black border-2 border-transparent hover:border-black transition-all duration-300 ease-in-out transform hover:scale-105">
           Finish Exercise
@@ -90,9 +95,9 @@ const ExerciseCard = () => {
               min={1}
             />
           </div>
-            <button className="w-full border-2 border-black py-2 rounded-md font-bold bg-transparent hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all duration-300 ease-in-out transform hover:scale-105">
-              History
-            </button>
+          <button className="w-full border-2 border-black py-2 rounded-md font-bold bg-transparent hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all duration-300 ease-in-out transform hover:scale-105">
+            History
+          </button>
         </div>
       </div>
     </main>
