@@ -240,25 +240,21 @@ export default function Home() {
       >
         <div
           className={`flex flex-col items-center gap-2 p-10 md:p-20 z-[4] invisible mt-10 ${animateSection3 ? "slide-up" : ""}`}>
-        <div>
-          <h1 className="text-center lg:text-left text-black text-[80px] font-bold font-['Roboto'] leading-[90px]">
-            Your Gallery
-          </h1>
+          <div>
+            <h1 className="text-center lg:text-left text-black text-[80px] font-bold font-['Roboto'] leading-[90px]">
+              Your Gallery
+            </h1>
+          </div>
+          <div className=" text-[#3a3a3a] text-sm sm:text-xl font-medium font-['Roboto'] leading-[18px] whitespace-nowrap mt-3 sm-mt-0">
+            Track your true progress by taking progress photos <br/> and inputing your body weight.
+          </div>
+          <div className="transition duration-300 ease-in-out hover:scale-105 mt-20 invisible md:visible">
+            <button
+              className={`w-full sm:w-[350px] md:w-[439px] h-[60px] sm:h-[70px] md:h-[83px] px-[30px] sm:px-[45px] md:px-[58px] py-4 sm:py-5 md:py-6 bg-black rounded-[20px] sm:rounded-[25px] md:rounded-[28.13px] justify-between items-center inline-flex text-[22px] sm:text-[30px] md:text-[37.51px] font-extrabold text-white hover:bg-[#ccff00] hover:text-black transition duration-300 ease-in-out hover:scale-105 invisible mt-10 p-5 sm:p-0 ${animateSection3 ? "slide-in-left" : ""}`}>
+              Upload NOW <span className="nf nf-fa-angle_right"></span>
+            </button>
+          </div>
         </div>
-        <div className=" text-[#3a3a3a] text-md sm:text-xl font-medium font-['Roboto'] leading-[18px] whitespace-nowrap mt-3 sm-mt-0">
-          Track your true progress by taking progress photos <br/> and inputing your body weight.
-        </div>
-<div className="transition duration-300 ease-in-out hover:scale-105 mt-20 invisible md:visible">
-  <button
-    className={`w-full sm:w-[350px] md:w-[439px] h-[60px] sm:h-[70px] md:h-[83px] px-[30px] sm:px-[45px] md:px-[58px] py-4 sm:py-5 md:py-6 bg-black rounded-[20px] sm:rounded-[25px] md:rounded-[28.13px] justify-between items-center inline-flex text-[22px] sm:text-[30px] md:text-[37.51px] font-extrabold text-white hover:bg-[#ccff00] hover:text-black transition duration-300 ease-in-out hover:scale-105 invisible mt-10 p-5 sm:p-0 ${
-      animateSection3 ? "slide-in-left" : ""
-    }`}
-  >
-    Upload NOW <span className="nf nf-fa-angle_right"></span>
-  </button>
-</div>
-
-      </div>
 
         <div className="z-1 w-screen ">
           <div className="absolute top-0 right-20 sm:top-auto sm:right-auto">

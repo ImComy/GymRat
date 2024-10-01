@@ -67,7 +67,7 @@ const SaveMeals = () => {
   const tableTotals = calculateTableTotals();
 
   return (
-    <div className="flex gap-10">
+    <div className="flex flex-col md:flex-row sm:flex-row gap-10">
       <button
         className="w-[214px] h-[53px] px-[19.14px] py-[8.61px] bg-gradient-to-r from-[#bfff00] to-[#ccff00] rounded-[9.57px] justify-center items-center gap-[9.57px] inline-flex transition duration-300 ease-in-out hover:scale-105 active:scale-100"
         onClick={handleSaveMealClick}

@@ -29,29 +29,32 @@ const MealCardList: React.FC<MealCardListProps> = ({ selectedOption, sortOrder }
   const addedMeals = sortedMeals.filter(meal => meal.isAdded);
 
   return (
-<main className="flex flex-col lg:flex-row justify-between mt-10 gap-8 lg:gap-12">
-  <section className="flex flex-col gap-y-5 w-full lg:w-2/3">
-    {addedMeals.length > 0 ? (
-      addedMeals.map(meal => (
-        <MealCard
-          key={meal._id}
-          meal={meal}
-          isAdded={meal.isAdded}
-          onAdd={handleAddMeal}
-        />
-      ))
-    ) : (
-      <div className="text-center text-gray-500 text-lg">
-        No meals have been added yet. Please add meals to see them here.
-      </div>
-    )}
-  </section>
+    <main className="flex flex-col lg:flex-row justify-between mt-10 gap-8 lg:gap-12">
+      {/* Meal Cards Section */}
+      <section className="flex flex-col gap-y-5 w-full lg:w-2/3">
+        {addedMeals.length > 0 ? (
+          addedMeals.map(meal => (
+            <MealCard
+              key={meal._id}
+              meal={meal}
+              isAdded={meal.isAdded}
+              onAdd={handleAddMeal}
+            />
+          ))
+        ) : (
+          <div className="text-center text-gray-500 text-lg">
+            No meals have been added yet. Please add meals to see them here.
+          </div>
+        )}
+      </section>
 
-  <aside className="mt-8 lg:mt-0 lg:w-1/3 w-full">
-    <MealStats />
-  </aside>
-</main>
-
+      {/* Meal Stats Section */}
+      <aside className="lg:w-1/3 w-full mx-auto flex justify-center">
+        <div className="w-full flex justify-center items-center">
+          <MealStats />
+        </div>
+      </aside>
+    </main>
   );
 };
 

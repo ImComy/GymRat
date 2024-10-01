@@ -68,35 +68,35 @@ const MealStats = () => {
   };
 
   return (
-    <div className="w-[428px] bg-[#f9f9f9] rounded-[20px] shadow flex flex-col font-['Inter']">
-      <header className="bg-[#ccff00] h-[60px] flex justify-center items-center rounded-t-[20px] ">
-        <h1 className="text-black text-2xl font-extrabold ">Meal’s Stats</h1>
+    <div className="w-[280px] bg-[#f9f9f9] rounded-[20px] shadow flex flex-col font-['Inter'] sm:w-[428px] ">
+      <header className="bg-[#ccff00] h-[60px] flex justify-center items-center rounded-t-[20px]">
+        <h1 className="text-black text-xl md:text-2xl font-extrabold">Meal’s Stats</h1>
       </header>
 
-      <section className="px-6 py-4">
+      <section className="px-4 py-4">
         <table className="w-full table-auto text-left">
           <tbody>
             <tr>
-              <td className="py-2 text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Protein</td>
-              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
+              <td className="py-2 text-base md:text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Protein</td>
+              <td className="py-2 text-right text-sm md:text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
                 {protein.toFixed(1)}g
               </td>
             </tr>
             <tr>
-              <td className="py-2 text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Carbs</td>
-              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
+              <td className="py-2 text-base md:text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Carbs</td>
+              <td className="py-2 text-right text-sm md:text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
                 {carbs.toFixed(1)}g
               </td>
             </tr>
             <tr>
-              <td className="py-2 text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Fats</td>
-              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
+              <td className="py-2 text-base md:text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Fats</td>
+              <td className="py-2 text-right text-sm md:text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
                 {fats.toFixed(1)}g
               </td>
             </tr>
             <tr>
-              <td className="py-2 text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Calories</td>
-              <td className="py-2 text-right text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
+              <td className="py-2 text-base md:text-lg font-semibold text-black border-b border-[#b6b6b6]">Total Calories</td>
+              <td className="py-2 text-right text-sm md:text-base font-medium text-[#626262] border-b border-[#b6b6b6]">
                 {calories.toFixed(1)}kcal
               </td>
             </tr>
@@ -107,13 +107,13 @@ const MealStats = () => {
       <div className="flex justify-center mt-auto mb-6">
         <button
           onClick={updateProgress}
-          className="w-[171px] py-3 bg-[#ccff00] rounded-lg text-center text-black font-bold hover:bg-lime-400 hover:scale-105 transition duration-300"
+          className="w-[140px] md:w-[171px] py-2 md:py-3 bg-[#ccff00] rounded-lg text-center text-black font-bold hover:bg-lime-400 hover:scale-105 transition duration-300"
         >
           Update
         </button>
       </div>
 
-      <section className="px-6 py-4 space-y-4">
+      <section className="px-4 py-4 space-y-4">
         <ProgressBar label="Daily Protein" value={updatedProtein} max={100} />
         <ProgressBar label="Daily Calories" value={updatedCalories} max={2600} />
         <ProgressBar label="Daily Carbs" value={updatedCarbs} max={100} />
@@ -135,23 +135,22 @@ const ProgressBar = ({ label, value, max }: ProgressBarProps) => {
 
   return (
     <div>
-      <div className="flex flex-col gap-2">
-        <label className="block text-sm font-semibold text-black ml-3">{label}</label>
-        <div className="w-full h-6 bg-[#d9d9d9] rounded-full overflow-hidden">
+      <div className="flex flex-col gap-1 md:gap-2">
+        <label className="block text-xs md:text-sm font-semibold text-black ml-2 md:ml-3">{label}</label>
+        <div className="w-full h-4 md:h-6 bg-[#d9d9d9] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-500 ease-in-out"
             style={{
               width: `${progressPercentage}%`,
               backgroundColor: progressColor,
-              transition: 'background-color 0.5s ease, width 0.5s ease'
+              transition: 'background-color 0.5s ease, width 0.5s ease',
             }}
           ></div>
         </div>
       </div>
-      <div className="text-right text-sm text-[#676767]">{`${value.toFixed(1)}/${max}`}</div>
+      <div className="text-right text-xs md:text-sm text-[#676767]">{`${value.toFixed(1)}/${max}`}</div>
     </div>
   );
 };
-
 
 export default MealStats;
