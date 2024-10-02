@@ -4,7 +4,6 @@ import MealCard from './mealcard';
 import MealStats from './stats';
 import { RootState } from '../../app/store';
 import { addMeal } from '../../app/mealSlice';
-import { Meal } from '../../app/mealSlice'
 
 interface MealCardListProps {
   selectedOption: string;

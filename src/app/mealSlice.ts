@@ -15,12 +15,10 @@ interface Meal {
 
 interface MealState {
   meals: Meal[];
-  savedMeals: string[];
 }
 
 const initialState: MealState = {
   meals: mealCardsArray,
-  savedMeals: [],
 };
 
 const mealSlice = createSlice({
@@ -54,27 +52,8 @@ const mealSlice = createSlice({
         meal.amount = action.payload.amount;
       }
     },
-    saveMeal: (state, action: PayloadAction<string>) => {
-      if (!state.savedMeals.includes(action.payload)) {
-        state.savedMeals.push(action.payload);
-        console.log("Saving Meal ID:", action.payload);
-      }
-    },
-    removeSavedMeal: (state, action: PayloadAction<string>) => {
-      state.savedMeals = state.savedMeals.filter(id => id !== action.payload);
-    },
   },
 });
 
-export const isMealSaved = (state: RootState, mealId: string) => state.meals.savedMeals.includes(mealId);
-export const {
-  addMeal,
-  removeMeal,
-  createMeal,
-  updateMeal,
-  updateMealAmount,
-  saveMeal,
-  removeSavedMeal
-} = mealSlice.actions;
-
+export const { addMeal, removeMeal, createMeal, updateMeal, updateMealAmount } = mealSlice.actions;
 export default mealSlice.reducer;
