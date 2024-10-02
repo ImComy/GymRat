@@ -4,6 +4,7 @@ import MealCard from './mealcard';
 import MealStats from './stats';
 import { RootState } from '../../app/store';
 import { addMeal } from '../../app/mealSlice';
+import { Meal } from '../../app/mealSlice'
 
 interface MealCardListProps {
   selectedOption: string;
@@ -30,7 +31,6 @@ const MealCardList: React.FC<MealCardListProps> = ({ selectedOption, sortOrder }
 
   return (
     <main className="flex flex-col lg:flex-row justify-between mt-10 gap-8 lg:gap-12">
-      {/* Meal Cards Section */}
       <section className="flex flex-col gap-y-5 w-full lg:w-2/3">
         {addedMeals.length > 0 ? (
           addedMeals.map(meal => (
@@ -48,7 +48,6 @@ const MealCardList: React.FC<MealCardListProps> = ({ selectedOption, sortOrder }
         )}
       </section>
 
-      {/* Meal Stats Section */}
       <aside className="lg:w-1/3 w-full mx-auto flex justify-center">
         <div className="w-full flex justify-center items-center">
           <MealStats />

@@ -46,7 +46,7 @@ const MealCard: React.FC<MealCardProps> = ({ meal }) => {
 
   return (
     <section
-      className="w-full md:w-[198px] h-auto relative rounded-[23px] border border-black flex flex-col md:flex-row justify-between items-center lg:items-start shadow transition duration-300 ease-in-out lg:hover:scale-105">
+      className="w-full md:w-full h-auto relative rounded-[23px] border border-black flex flex-col md:flex-row justify-between items-center lg:items-start shadow transition duration-300 ease-in-out lg:hover:scale-105">
       <article
         className="relative w-full sm:w-full md:max-w-[410px] lg:max-w-[350px] max-h-[170px] lg:max-h-[500px] bg-white
                    rounded-tl-[23px] rounded-bl-[0px] rounded-tr-[23px]

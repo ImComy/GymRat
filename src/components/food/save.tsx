@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../app/store';
+import { saveMeal, addMeal } from '../../app/mealSlice';
+import Heart from '../heart';
 
 interface Meal {
   name: string;
@@ -13,6 +15,9 @@ const SaveMeals = () => {
   const [showSavedMealsPopup, setShowSavedMealsPopup] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
+  const [savedMeals, setSavedMeals] = useState<Meal[]>([]);
+  const [mealName, setMealName] = useState<string>('');
+  const dispatch = useDispatch();
 
   const handleSaveMealClick = () => {
     setShowSaveMealPopup(true);
@@ -43,8 +48,22 @@ const SaveMeals = () => {
     setSelectedMeal(meal);
   };
 
-  const mealsarray: Meal[] = [];
+  const handleSaveButtonClick = () => {
+    if (selectedMeal && mealName) {
+      const newMeal: Meal = {
+        name: mealName,
+        type: selectedMeal,
+        date: new Date().toLocaleDateString(),
+      };
+      dispatch(saveMeal(newMeal));
+      setSavedMeals((prevMeals) => [...prevMeals, newMeal]);
+      handleClosePopup();
+      setMealName('');
+      setSelectedMeal(null);
+    }
+  };
 
+  const mealsarray: Meal[] = [];
   const meals = useSelector((state: RootState) => state.meals.meals);
 
   const [updatedProtein, setUpdatedProtein] = useState(0);
@@ -124,6 +143,8 @@ const SaveMeals = () => {
                 type="text"
                 placeholder="Enter your meal’s name..."
                 className="w-full bg-transparent text-gray-700 text-sm font-medium focus:outline-none"
+                onChange={(e) => setMealName(e.target.value)}
+                value={mealName}
               />
             </div>
 
@@ -144,7 +165,7 @@ const SaveMeals = () => {
             <div className="flex justify-center mt-8">
               <button
                 className="w-[180px] h-[45px] bg-gradient-to-r from-[#ccff00] to-[#bfff00] rounded-full text-black font-bold transition-transform hover:scale-105"
-                onClick={handleClosePopup}
+                onClick={handleSaveButtonClick}
               >
                 Save Meal
               </button>
@@ -196,12 +217,15 @@ const SaveMeals = () => {
               <span>Day added</span>
             </div>
 
-            {mealsarray && mealsarray.length > 0 ? (
-              mealsarray.map((meal, index) => (
+            {savedMeals && savedMeals.length > 0 ? (
+              savedMeals.map((meal, index) => (
                 <button
                   key={index}
                   className="meal-row w-full bg-white rounded shadow px-5 py-2 flex justify-between mb-3 transition-transform hover:scale-105 transition duration-300 text-sm"
-                  onClick={handleClosePopup}>
+                  onClick={() => {
+                    dispatch(addMeal(meal._id));
+                    handleClosePopup();
+                  }}>
                   <span className="text-black font-semibold">{meal.name}</span>
                   <span className="text-black font-semibold">{meal.type}</span>
                   <span className="text-black font-semibold">{meal.date}</span>

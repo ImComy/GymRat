@@ -49,17 +49,18 @@ const Food = () => {
 
   return (
     <Provider store={store}>
-      <main className="bg-white w-screen p-10">
+      <main className="bg-white w-screen p-10 overflow-hidden">
         <header>
-          <p className="text-[#515151] text-[22px] font-medium font-['Roboto'] leading-relaxed tracking-wide">
+          <p className="text-[#515151] text-[18px] md:text-[22px] font-medium font-['Roboto'] leading-relaxed tracking-wide">
             {pathHistory[pathHistory.length - 1]}
           </p>
-          <h1 className="text-black text-[80px] font-black font-['Inter'] leading-[72px]">Food</h1>
-          <p className="text-[#515151] text-2xl font-medium font-['Roboto'] leading-[28.80px] tracking-wide mt-5">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut odio orci,
+          <h1 className="text-black text-[50px] md:text-[80px] font-black font-['Inter'] leading-[56px] md:leading-[72px] sm:text-[60px] sm:leading-[44px]">
+            Food
+          </h1>
+          <p className="text-[#515151] text-lg md:text-2xl font-medium font-['Roboto'] leading-[24px] md:leading-[28.80px] tracking-wide mt-3 md:mt-5">
+            Make mindful choices to enhance your energy and well-being.
           </p>
         </header>
-
         <SearchFood onSearch={handleSearch} />
 
         <section>

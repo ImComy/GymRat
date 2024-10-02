@@ -88,14 +88,12 @@ export default function Home() {
             UNLEASH<br />YOUR<br />POTENTIAL
           </h1>
           <div className="text-white text-sm md:text-[15px] sm:text-[15px] font-medium font-['Inter'] mt-4">
-            <p className="leading-5 md:leading-[13.5px]">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut odio orci, <br />
-              vulputate in metus id, euismod congue arcu. Quisque hendrerit facilisis <br />
-              dolor vel facilisis. Nulla vel mauris massa. Proin a turpis eu urna semper sagittis fermentum nec purus.<br />
-              Phasellus porttitor semper ante, at elementum tellus eleifend euismod. Quisque vitae tempus lacus,<br />
-              quis vehicula felis. Duis ut elementum enim, venenatis venenatis nibh. Proin pharetra massa id elit porta hendrerit.<br />
-              Vestibulum in leo sollicitudin, consectetur enim ut, bibendum odio. Suspendisse ut lacus tellus<br />
-              Nunc maximus porttitor tempus.
+            <p className="leading-5 md:leading-[16.5px]">
+              with <strong>GymRat!</strong> Track your sets, monitor your food nutrition, and upload<br />
+              photos of yourself to visually track your progress. Whether you're just starting out or looking<br />
+              to push your limits, GymRat is designed to help you achieve your fitness goals.<br />
+              Our tools make it easy to manage your workouts and stay on top of your nutrition, ensuring<br />
+              you stay motivated and on track for success. Join us and start transforming your fitness journey today!
             </p>
           </div>
         </div>
@@ -201,8 +199,7 @@ export default function Home() {
             Nutritional Insights
           </p>
           <p className="w-full md:w-[634px] text-white text-lg md:text-xl font-medium font-['Roboto'] leading-5 text-center">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut odio orci,
-            <br /> vulputate in metus id, euismod congue arcu. Quisque hendrerit facilisis dolor vel facilisis. Nulla vel mauris massa.
+            Nourish your body with whole foods every day, avoiding processed snacks that drain your energy. Make mindful choices to fuel your well-being naturally, and cultivate a healthier relationship with food.
           </p>
         </div>
 

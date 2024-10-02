@@ -60,7 +60,7 @@ const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder 
     });
 
   return (
-    <div className="w-full flex justify-center items-center relative">
+    <div className="flex justify-center items-center relative w-screen md:w-full w-full overflow-hidden">
       <button
         className="bg-transparent border-none cursor-pointer outline-none flex items-center justify-center text-3xl z-9 mr-5 hidden md:block lg:block"
         onClick={() => scroll('left')}
@@ -68,7 +68,7 @@ const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder 
         <span className="nf nf-fa-arrow_circle_left text-3xl text-[#ccff00]" />
       </button>
       <animated.div
-        className="overflow-x-scroll p-2 sm:p-5 w-full"
+        className="overflow-x-scroll p-2 sm:p-5 w-screen md:w-full w-full"
         ref={scrollContainerRef}
         scrollLeft={props.scrollLeft}
       >
