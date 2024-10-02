@@ -71,9 +71,9 @@ const Food = () => {
         </section>
 
         <section className="mt-10 px-4 md:px-8">
-          <header className="flex flex-col md:flex-row sm:flex-row items-start md:items-center justify-between space-y-4 md:space-y-0">
+          <header className="flex flex-col md:flex-row sm:flex-row items-center md:items-center justify-between space-y-4">
             <h1 className="text-black text-5xl sm:text-6xl md:text-[72px] lg:text-[80px] font-black font-['Inter'] leading-tight sm:leading-tight md:leading-[72px]">Meal</h1>
-            <div className="md:ml-4">
+            <div className="sm:mx-auto md:mx-0 lg:mx-0">
               <SaveMeals />
             </div>
           </header>

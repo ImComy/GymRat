@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -8,6 +8,7 @@ export default function Navigation() {
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null); // To reference the dropdown
 
   const toggleDropdown = (): void => {
     setDropdownOpen(!isDropdownOpen);
@@ -25,7 +26,7 @@ export default function Navigation() {
     setMobileMenuOpen(false);
   };
 
-  useEffect((): (() => void) => {
+  useEffect(() => {
     const handleScroll = (): void => {
       setScrolled(window.scrollY > 60);
     };
@@ -34,10 +35,32 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const getLinkStyle = (path: string): string =>
-    currentPath === path
+  const handleClickOutside = (event: MouseEvent): void => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      closeDropdown();
+    }
+  };
+
+  useEffect(() => {
+    if (isDropdownOpen) {
+      window.addEventListener('mousedown', handleClickOutside);
+    } else {
+      window.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      window.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
+
+  const getLinkStyle = (path: string): string => {
+    if (path === '/' && currentPath !== '/') {
+      return "text-black font-semibold text-[1.25rem]";
+    }
+    return currentPath.startsWith(path)
       ? "text-black font-bold underline text-[1.25rem]"
       : "text-black font-semibold text-[1.25rem]";
+  };
 
   return (
     <nav
@@ -84,7 +107,7 @@ export default function Navigation() {
                 Home
               </Link>
             </li>
-            <li className="relative group">
+            <li className="relative group" ref={dropdownRef}>
               <button
                 onClick={toggleDropdown}
                 className="text-black font-semibold hover:text-black flex items-center space-x-1 text-[1.25rem]"

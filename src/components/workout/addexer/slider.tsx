@@ -64,7 +64,7 @@ const Slider: React.FC<SliderProps> = ({ onViewDetails }) => {
           className="text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute left-[-100px] z-10">
           <span className="nf nf-fa-angle_left"></span>
         </button>
-        <div className="flex transition-transform duration-500 ease-in-out w-full space-x-8 gap-20" style={{ transform: `translateX(-${currentSlide * 109}%)` }}>
+        <div className="flex transition-transform duration-500 ease-in-out w-full space-x-8 gap-20 ml-5" style={{ transform: `translateX(-${currentSlide * 109.5}%)` }}>
           {Array.from({ length: numSlides }).map((_, index) => (
             <div key={index} className="w-full flex-shrink-0">
               {renderCardsForSlide(index)}

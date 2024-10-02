@@ -14,7 +14,7 @@ const Card: React.FC<CardProps> = ({ name, type, onViewDetails }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 w-[366px] h-[79px] flex items-center gap-4">
+    <div className="bg-white rounded-lg shadow-lg p-4 w-[366px] h-[80px] flex items-center gap-4">
       <button
         className="relative w-6 h-6 flex items-center justify-center transition-all duration-300"
         onClick={handleCheck}

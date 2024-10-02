@@ -139,6 +139,7 @@ const [history, setHistory] = useState<HistoryEntry[]>([
   const [open, setOpen] = useState(false);
   const [viewMore, setViewMore] = useState(false);
   const [visibleRows, setVisibleRows] = useState(5);
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleNumSetsChange = (value: string) => {
     const newNumSets = parseInt(value) || 0;
@@ -165,7 +166,13 @@ const [history, setHistory] = useState<HistoryEntry[]>([
     const validSets = sets.filter(set => set.reps && set.weight);
     if (validSets.length === 0) return;
 
+    setIsChecked(true);
+    setTimeout(() => {
+      setIsChecked(false);
+    }, 1000);
+
     setHistory(prev => [...prev, { date, sets: validSets }]);
+    setSets(sets.map(set => ({ ...set, reps: '', weight: '' })));
   };
 
   const handleOpen = () => {
@@ -201,7 +208,12 @@ const [history, setHistory] = useState<HistoryEntry[]>([
       <header className="relative">
         <div className="bg-[#ccff00] h-11 flex items-center justify-between rounded-t-lg">
           <h2 className="text-black text-lg font-extrabold ml-4">INCLINE DUMBBELL BENCH PRESS</h2>
-          <button className="nf nf-md-trash_can_outline bg-black p-3 text-xl rounded-tr-lg hover:bg-red-600 transition duration-300"></button>
+          <button onClick={handleFinishExercise} className={`p-2 px-3 w-12 h-11 flex justify-center items-center text-xl rounded-tr-lg transition-colors duration-500 ease-in-out transform ${isChecked ? 'bg-green-600' : 'bg-black hover:bg-red-600'}`}>
+            <span className={`absolute transition-all duration-500 ease-in-out transform ${isChecked ? 'opacity-100 scale-125' : 'opacity-0 scale-0'}`}>✔️</span>
+            <span className={`absolute transition-all duration-500 ease-in-out transform ${isChecked ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
+              <i className="nf nf-md-trash_can_outline"></i>
+            </span>
+          </button>
         </div>
         <img
           className="w-full h-[238px] object-cover"
@@ -247,8 +259,7 @@ const [history, setHistory] = useState<HistoryEntry[]>([
       <div className="p-4 space-y-2">
         <button
           onClick={handleFinishExercise}
-          className="w-full bg-[#ccff00] text-black py-2 rounded-md font-bold hover:bg-white hover:text-black border-2 border-transparent hover:border-black transition-all duration-300 ease-in-out transform hover:scale-105"
-        >
+          className="w-full bg-[#ccff00] text-black py-2 rounded-md font-bold hover:bg-white hover:text-black border-2 border-transparent hover:border-black transition-all duration-300 ease-in-out transform hover:scale-105">
           Finish Exercise
         </button>
         <div className="grid grid-cols-2 gap-4 text-black">
@@ -265,8 +276,7 @@ const [history, setHistory] = useState<HistoryEntry[]>([
           </div>
           <button
             onClick={handleOpen}
-            className="w-full border-2 border-black py-2 rounded-md font-bold bg-transparent hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all duration-300 ease-in-out transform hover:scale-105"
-          >
+            className="w-full border-2 border-black py-2 rounded-md font-bold bg-transparent hover:bg-[#ccff00] hover:border-[#ccff00] hover:text-black transition-all duration-300 ease-in-out transform hover:scale-105">
             History
           </button>
         </div>
@@ -288,7 +298,7 @@ const [history, setHistory] = useState<HistoryEntry[]>([
                 </tr>
               </thead>
               <tbody>
-                {history.slice(0, visibleRows).map((entry, idx) => (
+                {history.slice().reverse().slice(0, visibleRows).map((entry, idx) => (
                   <tr key={idx} className="odd:bg-gray-200 even:bg-white hover:bg-gray-300">
                     <td className={`p-4 text-center font-medium border-r-4 border-dashed border-[#ccff00] ${idx === visibleRows - 1 ? 'border-b-0' : 'border-b'}`}>
                       {new Date(entry.date).toLocaleDateString()}

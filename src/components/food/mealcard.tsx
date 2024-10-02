@@ -45,46 +45,65 @@ const MealCard: React.FC<MealCardProps> = ({ meal }) => {
   };
 
   return (
-    <section className="w-[740px] h-[150px] relative rounded-[23px] border border-black flex justify-between items-start shadow transition duration-300 ease-in-out hover:scale-105">
-      <article className="relative w-[298px] h-[150] bg-white rounded-l-[23px] overflow-hidden shadow-md">
+    <section
+      className="w-full md:w-[198px] h-auto relative rounded-[23px] border border-black flex flex-col md:flex-row justify-between items-center lg:items-start shadow transition duration-300 ease-in-out lg:hover:scale-105">
+      <article
+        className="relative w-full sm:w-full md:max-w-[410px] lg:max-w-[350px] max-h-[170px] lg:max-h-[500px] bg-white
+                   rounded-tl-[23px] rounded-bl-[0px] rounded-tr-[23px]
+                   sm:rounded-tl-[23px] sm:rounded-bl-[0px] sm:rounded-tr-[23px]
+                   md:rounded-tl-[23px] md:rounded-bl-[23px] md:rounded-tr-[0px]
+                   lg:rounded-tl-[23px] lg:rounded-bl-[23px] lg:rounded-tr-[0px]
+                   overflow-hidden shadow-md flex-shrink-[2]">
         <img
-          className="w-full h-[148px] object-cover"
+          className="w-full h-full object-cover"
           src={meal.image || 'https://via.placeholder.com/298x150'}
           alt={meal.title}
         />
         <div className="absolute inset-0 bg-black/40"></div>
-        <h2 className="absolute inset-0 flex items-center justify-center text-white text-3xl font-extrabold">
+        <h2 className="absolute inset-0 flex items-center justify-center text-white text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
           {meal.title}
         </h2>
       </article>
 
-      <div className="flex flex-col justify-between items-center flex-grow p-4">
-        <section className="flex mr-24">
-          <label className="text-black text-lg font-extrabold mr-6">Amount</label>
+      <div
+        className="flex flex-col justify-center items-center flex-grow px-4 md:px-2 text-center lg:text-left md:items-center lg:items-center lg:justify-center lg:my-auto py-4 lg:py-0">
+        <section className="flex items-center justify-center">
+          <label className="text-black text-lg font-extrabold mr-4">Amount</label>
           <input
             type="number"
             value={amount}
             onChange={handleAmountChange}
-            className="w-24 text-center text-lg font-medium text-black border border-gray-300 px-3 rounded-lg"
+            className="w-20 sm:w-24 text-center text-lg font-medium text-black border border-gray-300 px-3 rounded-lg"
           />
-          <span className="text-lg font-medium text-black">&nbsp;g</span>
+          <span className="text-lg font-medium text-black ml-2">&nbsp;g</span>
         </section>
 
-        <section className="flex justify-between mt-4 gap-x-9">
-          <div className="flex flex-col items-start space-y-2">
-            <span className="text-black font-bold ">Fats: <span className="text-gray-700 text-md font-semibold px-3">{calculateNutrient(meal.fats)}&nbsp;g</span></span>
-            <span className="text-black font-bold ">Protein: <span className="text-gray-700 text-md font-semibold px-3">{calculateNutrient(meal.protein)}&nbsp;g</span></span>
-          </div>
-          <div className="flex flex-col items-start space-y-2">
-            <span className="text-black font-bold ">Carbs: <span className="text-gray-700 text-md font-semibold px-3">{calculateNutrient(meal.carbs)}&nbsp;g</span></span>
-            <span className="text-black font-bold ">Calories: <span className="text-gray-700 text-md font-semibold px-3">{calculateNutrient(meal.calories)}&nbsp;kcal</span></span>
+        <section className="flex flex-col mt-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-10">
+            <div className="flex flex-col items-center sm:items-start space-y-2">
+              <span className="text-black font-bold">
+                Fats: <span className="text-gray-700 text-md font-semibold">{calculateNutrient(meal.fats)}&nbsp;g</span>
+              </span>
+              <span className="text-black font-bold">
+                Protein: <span className="text-gray-700 text-md font-semibold">{calculateNutrient(meal.protein)}&nbsp;g</span>
+              </span>
+            </div>
+            <div className="flex flex-col items-center sm:items-start space-y-2">
+              <span className="text-black font-bold">
+                Carbs: <span className="text-gray-700 text-md font-semibold">{calculateNutrient(meal.carbs)}&nbsp;g</span>
+              </span>
+              <span className="text-black font-bold">
+                Calories: <span className="text-gray-700 text-md font-semibold">{calculateNutrient(meal.calories)}&nbsp;kcal</span>
+              </span>
+            </div>
           </div>
         </section>
       </div>
 
       <button
         onClick={handleRemove}
-        className="absolute top-[-5px] right-[-10px] w-10 h-10 text-2xl flex items-center justify-center text-center text-white bg-black rounded-full hover:bg-red-600 transition-transform duration-300 transform hover:scale-110 shadow-lg">
+        className="absolute top-[-5px] right-[-15px] w-10 h-8 sm:h-10 text-xl sm:text-2xl flex items-center justify-center text-center text-white bg-black rounded-full hover:bg-red-600 transition-transform duration-300 transform hover:scale-110 shadow-lg"
+      >
         <span className="nf nf-oct-x"></span>
       </button>
     </section>
