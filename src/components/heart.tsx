@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 interface HeartProps {
   heartColor?: string;
   isClicked?: boolean;
+  size?: number;
 }
 
-const Heart: React.FC<HeartProps> = ({ heartColor = 'red', isClicked = false }) => {
+const Heart: React.FC<HeartProps> = ({ heartColor = 'red', isClicked = false, size = 24 }) => {
   const [liked, setLiked] = useState(isClicked);
   const [animateHeart, setAnimateHeart] = useState(false);
 
@@ -31,8 +32,8 @@ const Heart: React.FC<HeartProps> = ({ heartColor = 'red', isClicked = false }) 
             className={`transition-all duration-300 ${
               animateHeart ? 'animate-heart' : ''
             }`}
-            width='24'
-            height='24'
+            width={size}
+            height={size}
             viewBox='0 0 24 24'
           >
             <path

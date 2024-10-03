@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../app/store';
+import { saveMealCollection, summonSaveMealCollection } from '../../app/mealSlice';
+import Heart from '../heart';
 
 interface Meal {
   name: string;
@@ -13,6 +15,9 @@ const SaveMeals = () => {
   const [showSavedMealsPopup, setShowSavedMealsPopup] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState<string | null>(null);
+  const dispatch = useDispatch();
+  const [mealName, setMealName] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('')
 
   const handleSaveMealClick = () => {
     setShowSaveMealPopup(true);
@@ -43,9 +48,25 @@ const SaveMeals = () => {
     setSelectedMeal(meal);
   };
 
-  const mealsarray: Meal[] = [];
+  const handleSaveMeal = () => {
+    if (selectedMeal && mealName.trim() !== '') {
+      dispatch(saveMealCollection({ name: mealName, type: selectedMeal }));
+      setMealName('');
+      setSelectedMeal(null);
+      handleClosePopup();
+    } else {
+      alert('Please select a meal type and enter a meal name.');
+    }
+  };
 
+  const handleSummonMeals = (name: string, type: string) => {
+    dispatch(summonSaveMealCollection({ name, type }));
+    handleClosePopup();
+  };
+
+  const mealsarray: Meal[] = [];
   const meals = useSelector((state: RootState) => state.meals.meals);
+  const savedMealsArray = useSelector((state: any) => state.meals.savedMealsArray);
 
   const [updatedProtein, setUpdatedProtein] = useState(0);
   const [updatedCalories, setUpdatedCalories] = useState(0);
@@ -124,6 +145,8 @@ const SaveMeals = () => {
                 type="text"
                 placeholder="Enter your meal’s name..."
                 className="w-full bg-transparent text-gray-700 text-sm font-medium focus:outline-none"
+                value={mealName}
+                onChange={(e) => setMealName(e.target.value)}
               />
             </div>
 
@@ -144,7 +167,7 @@ const SaveMeals = () => {
             <div className="flex justify-center mt-8">
               <button
                 className="w-[180px] h-[45px] bg-gradient-to-r from-[#ccff00] to-[#bfff00] rounded-full text-black font-bold transition-transform hover:scale-105"
-                onClick={handleClosePopup}
+                onClick={handleSaveMeal}
               >
                 Save Meal
               </button>
@@ -187,6 +210,8 @@ const SaveMeals = () => {
                 type="text"
                 placeholder="Search..."
                 className="w-full py-2 px-4 pl-10 rounded-full text-black focus:outline-none"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
 
@@ -196,15 +221,17 @@ const SaveMeals = () => {
               <span>Day added</span>
             </div>
 
-            {mealsarray && mealsarray.length > 0 ? (
-              mealsarray.map((meal, index) => (
+            {savedMealsArray && savedMealsArray.length > 0 ? (
+              savedMealsArray.filter((savedMeal: Meal) =>
+                savedMeal.name.toLowerCase().includes(searchQuery.toLowerCase())
+              ).map((savedMeal: Meal, index: number) => (
                 <button
                   key={index}
                   className="meal-row w-full bg-white rounded shadow px-5 py-2 flex justify-between mb-3 transition-transform hover:scale-105 transition duration-300 text-sm"
-                  onClick={handleClosePopup}>
-                  <span className="text-black font-semibold">{meal.name}</span>
-                  <span className="text-black font-semibold">{meal.type}</span>
-                  <span className="text-black font-semibold">{meal.date}</span>
+                  onClick={() => handleSummonMeals(savedMeal.name, savedMeal.type)}>
+                  <span className="text-black font-semibold">{savedMeal.name}</span>
+                  <span className="text-black font-semibold">{savedMeal.type}</span>
+                  <span className="text-black font-semibold">{savedMeal.date}</span>
                 </button>
               ))
             ) : (
