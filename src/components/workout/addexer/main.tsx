@@ -1,14 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Search from './search';
 import Slider from './slider';
+import { exercises } from '../../../app/workouts/objects';
+
+interface Instruction {
+  label: string;
+  text: string;
+}
+
+interface Benefit {
+  label: string;
+  text: string;
+}
+
+interface CommonMistake {
+  label: string;
+  text: string;
+}
+
+interface ExerciseDetails {
+  name: string;
+  type: string;
+  musclesWorked: {
+    primary: string;
+    secondary: string;
+  };
+  setup: string;
+  youtubeLink: string;
+  musclesWorkedIMG: string;
+  instructions: Instruction[];
+  benefits: Benefit[];
+  commonMistakes: CommonMistake[];
+}
 
 const Main = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [closingPopup, setClosingPopup] = useState(false);
-  const [selectedCard, setSelectedCard] = useState<{ name: string; type: string } | null>(null);
+  const [selectedCard, setSelectedCard] = useState<ExerciseDetails | null>(null);
+  const popupRef = useRef<HTMLDivElement | null>(null);
 
-  const handleViewDetails = (name: string, type: string) => {
-    setSelectedCard({ name, type });
+  const handleViewDetails = (exercise: ExerciseDetails) => {
+    setSelectedCard(exercise);
     setShowPopup(true);
     setClosingPopup(false);
   };
@@ -21,6 +53,21 @@ const Main = () => {
     }, 300);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+        handleClosePopup();
+      }
+    };
+
+    if (showPopup) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showPopup]);
   return (
     <main className="px-6 md:px-20">
       <h1 className="text-black text-[32px] md:text-[40px] font-bold font-['Inter']">Add Exercises</h1>
@@ -31,7 +78,7 @@ const Main = () => {
 
       {showPopup && selectedCard && (
         <div className={`fixed inset-0 flex justify-center items-center bg-black/70 z-50 p-4 overflow-auto ${closingPopup ? 'animate-fade-out' : 'animate-fade-in'}`}>
-          <div className={`bg-white rounded-lg shadow-lg p-6 md:p-8 w-full h-full max-w-[900px] relative ${closingPopup ? 'animate-popup-close' : 'animate-popup-open'} overflow-scroll`}>
+          <div ref={popupRef} className={`bg-white rounded-lg shadow-lg p-6 md:p-8 w-full h-full max-w-[900px] relative ${closingPopup ? 'animate-popup-close' : 'animate-popup-open'} overflow-scroll`}>
             <button
               onClick={handleClosePopup}
               className="absolute top-7 right-5 p-2 px-4 text-4xl hover:text-red-500 text-gray-600 hover:text-gray-800 transition-colors"
@@ -50,7 +97,7 @@ const Main = () => {
                   className="rounded-lg"
                   width="100%"
                   height="100%"
-                  src="https://www.youtube.com/embed/sex"
+                  src={selectedCard.youtubeLink}
                   title="YouTube video player"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -60,56 +107,46 @@ const Main = () => {
 
               <section>
                 <div className="w-[400px]">
-                  <span className="text-black text-sm font-medium font-['Inter'] leading-10">Muscles Worked:<br/></span>
+                  <span className="text-black text-md font-medium font-['Inter'] leading-10">Muscles Worked:<br/></span>
                   <span className="text-black text-sm font-bold font-['Inter'] leading-tight">Primary</span>
-                  <span className="text-black text-sm font-medium font-['Inter'] leading-tight">: Upper pectoralis major (upper chest)<br/></span>
+                  <span className="text-black text-sm font-medium font-['Inter'] leading-tight">: {selectedCard.musclesWorked.primary}<br/></span>
                   <span className="text-black text-sm font-bold font-['Inter'] leading-tight">Secondary</span>
-                  <span className="text-black text-sm font-medium font-['Inter'] leading-tight">: Anterior deltoids (front shoulders), triceps brachii, and serratus anterior (muscle on the side of the chest)</span>
+                  <span className="text-black text-sm font-medium font-['Inter'] leading-tight">: {selectedCard.musclesWorked.secondary}</span>
                 </div>
 
                 <div className="w-full h-[238.16px] my-5">
-                  <img src="https://via.placeholder.com/492x292" alt="Exercise visual aid" />
+                  <img src={selectedCard.musclesWorkedIMG} alt="Exercise visual aid" />
                 </div>
               </section>
             </div>
 
-            <div className="flex mt-8 gap-20">
-              <div className="instructions space-y-4 text-black">
+            <div className="grid mt-8 gap-20 grid-cols-5">
+              <div className="instructions space-y-4 text-black mt-5 col-span-3">
                 <h3 className="text-black text-[34.27px] font-bold font-['Inter'] leading-[47.30px]">How to Perform</h3>
-                <p className="text-base leading-relaxed">
-                  <strong>Setup:</strong> Set an incline bench to a 30-45 degree angle. Grab a dumbbell in each hand and sit on the bench with the dumbbells resting on your thighs.
-                </p>
-                <p className="text-base leading-relaxed">
-                  <strong>Position:</strong> Lie back on the bench, press the dumbbells up toward the ceiling, and position them directly over your chest with your palms facing forward. Your arms should be fully extended but not locked out.
-                </p>
-                <p className="text-base leading-relaxed">
-                  <strong>Lower:</strong> Slowly lower the dumbbells down to the sides of your chest, bending your elbows at about a 90-degree angle. Keep the movement controlled.
-                </p>
-                <p className="text-base leading-relaxed">
-                  <strong>Press:</strong> Press the dumbbells back up to the starting position by squeezing your chest muscles and straightening your arms.
-                </p>
-                <p className="text-base leading-relaxed">
-                  <strong>Repeat:</strong> Perform the desired number of repetitions.
-                </p>
+                {selectedCard.instructions.map((instruction, index) => (
+                  <p key={index} className="text-base leading-relaxed">
+                    <strong>{instruction.label}: </strong>{instruction.text}
+                  </p>
+                ))}
               </div>
 
-              <div className="benefits mt-6 space-y-2 border-l border-black pl-5">
+              <div className="benefits mt-6 space-y-2 border-l border-black pl-5 text-gray-700 pt-10 col-span-2">
                 <h3 className="text-[#606060] text-base font-black font-['Inter'] leading-snug">Benefits</h3>
-                <ul className="list-disc pl-5 text-gray-700">
-                  <li><span className="text-[#606060] text-base font-bold font-['Inter'] leading-snug">Upper chest development:</span>The incline angle targets the upper chest, helping build a balanced and well-rounded chest.</li>
-                  <li><span className="text-[#606060] text-base font-bold font-['Inter'] leading-snug">Improved shoulder stability:</span> The dumbbells require more stabilization than a barbell, engaging smaller stabilizer muscles, improving shoulder stability and coordination.</li>
-                  <li><span className="text-[#606060] text-base font-bold font-['Inter'] leading-snug">Symmetry and balance:</span> Dumbbells allow each side of the body to work independently, which can help correct muscle imbalances between the left and right sides.</li>
-                </ul>
+                {selectedCard.benefits.map((benefit, index) => (
+                  <p key={index} className="text-base leading-relaxed">
+                    <span className="text-[#606060] text-base font-bold font-['Inter'] leading-snug">{benefit.label}:</span> {benefit.text}
+                  </p>
+                ))}
               </div>
             </div>
 
-            <div className="common-mistakes mt-10 space-y-2 text-xl">
-              <h3 className="text-black text-xl font-bold font-['Inter'] leading-7">Common Mistakes</h3>
-              <ul className="list-disc pl-5 text-gray-700">
-                <li><span className="text-black font-bold font-['Inter'] leading-tight">Excessive arching of the lower back:</span> Maintain contact with the bench to prevent injury.</li>
-                <li><span className="text-black font-bold font-['Inter'] leading-tight">Too much weight:</span> Using more weight than you can handle often leads to poor form and increases the risk of injury.</li>
-                <li><span className="text-black font-bold font-['Inter'] leading-tight">Inconsistent range of motion:</span> Lower the dumbbells all the way down to your chest for a full stretch.</li>
-              </ul>
+            <div className="common-mistakes space-y-2 text-black mt-10">
+              <h3 className="text-black text-[34.27px] font-bold font-['Inter'] leading-[47.30px]">Common Mistakes</h3>
+              {selectedCard.commonMistakes.map((mistake, index) => (
+                <p key={index} className="text-base leading-relaxed">
+                  <strong>{mistake.label}:</strong> {mistake.text}
+                </p>
+              ))}
             </div>
           </div>
         </div>

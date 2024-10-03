@@ -1,13 +1,42 @@
 import React, { useState } from 'react';
 
+interface MusclesWorked {
+  primary: string;
+  secondary: string;
+}
+
 interface CardProps {
   name: string;
   type: string;
-  onViewDetails: () => void;
+  isChecked: boolean;
+  youtubeLink: string;
+  imageUrl: string;
+  musclesWorkedIMG: string;
+  muscleGroup: string;
+  routineGroup: string;
+  musclesWorked: MusclesWorked;
+  instructions: { label: string; text: string }[];
+  benefits: { label: string; text: string }[];
+  commonMistakes: { label: string; text: string }[];
+  onViewDetails: (details: CardProps) => void;
 }
 
-const Card: React.FC<CardProps> = ({ name, type, onViewDetails }) => {
-  const [isChecked, setIsChecked] = useState(false);
+const Card: React.FC<CardProps> = ({
+  name,
+  type,
+  isChecked: initialChecked,
+  youtubeLink,
+  imageUrl,
+  musclesWorkedIMG,
+  muscleGroup,
+  routineGroup,
+  musclesWorked,
+  instructions,
+  benefits,
+  commonMistakes,
+  onViewDetails
+}) => {
+  const [isChecked, setIsChecked] = useState(initialChecked);
 
   const handleCheck = () => {
     setIsChecked(!isChecked);
@@ -34,7 +63,7 @@ const Card: React.FC<CardProps> = ({ name, type, onViewDetails }) => {
       </button>
 
       <img
-        src="/image.png"
+        src={imageUrl}
         alt="exercise"
         className="w-[79px] h-[79px]"
       />
@@ -45,9 +74,23 @@ const Card: React.FC<CardProps> = ({ name, type, onViewDetails }) => {
       </div>
 
       <button
-        onClick={onViewDetails}
-        className="ml-auto text-black text-sm font-bold leading-5 text-left w-10 border-l-2 border-black pl-4 mr-5"
-      >
+        onClick={() =>
+          onViewDetails({
+            name,
+            type,
+            isChecked,
+            youtubeLink,
+            imageUrl,
+            musclesWorkedIMG,
+            muscleGroup,
+            routineGroup,
+            musclesWorked,
+            instructions,
+            benefits,
+            commonMistakes,
+            onViewDetails,
+          })
+        }className="ml-auto text-black text-sm font-bold leading-5 text-left w-10 border-l-2 border-black pl-4 mr-5">
         <span>View Details</span>
       </button>
     </div>

@@ -1,39 +1,14 @@
 import React, { useState } from 'react';
 import Card from './card';
-
-interface CardData {
-  name: string;
-  type: string;
-}
+import { exercises } from '../../../app/workouts/objects';
 
 interface SliderProps {
-  onViewDetails: (name: string, type: string) => void;
+  onViewDetails: (exercise: any) => void;
 }
 
 const Slider: React.FC<SliderProps> = ({ onViewDetails }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const numSlides = 3;
-
-  const cards: CardData[] = [
-    { name: "Bench Press", type: "Dumbbell" },
-    { name: "Bench Press", type: "Barbell" },
-    { name: "Squat", type: "Barbell" },
-    { name: "Deadlift", type: "Barbell" },
-    { name: "Overhead Press", type: "Dumbbell" },
-    { name: "Pull-Up", type: "Bodyweight" },
-    { name: "Leg Press", type: "Machine" },
-    { name: "Bicep Curl", type: "Dumbbell" },
-    { name: "Tricep Extension", type: "Cable" },
-    { name: "Lat Pulldown", type: "Cable" },
-    { name: "Chest Fly", type: "Machine" },
-    { name: "Front Squat", type: "Barbell" },
-    { name: "Tricep Dip", type: "Bodyweight" },
-    { name: "Leg Extension", type: "Machine" },
-    { name: "Hamstring Curl", type: "Machine" },
-    { name: "Calf Raise", type: "Machine" },
-    { name: "Incline Bench Press", type: "Barbell" },
-    { name: "Seated Row", type: "Cable" }
-  ];
+  const numSlides = Math.ceil(exercises.length / 6);
 
   const handlePrevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? numSlides - 1 : prev - 1));
@@ -45,12 +20,27 @@ const Slider: React.FC<SliderProps> = ({ onViewDetails }) => {
 
   const renderCardsForSlide = (slideIndex: number) => {
     const startIndex = slideIndex * 6;
-    const selectedCards = cards.slice(startIndex, startIndex + 6);
+    const selectedExercises = exercises.slice(startIndex, startIndex + 6);
 
     return (
       <div className="grid grid-cols-3 gap-4">
-        {selectedCards.map((card, index) => (
-          <Card key={index} name={card.name} type={card.type} onViewDetails={() => onViewDetails(card.name, card.type)}/>
+        {selectedExercises.map((exercise, index) => (
+          <Card
+            key={index}
+            name={exercise.name}
+            type={exercise.type}
+            isChecked={exercise.isChecked}
+            youtubeLink={exercise.youtubeLink}
+            imageUrl={exercise.imageUrl}
+            musclesWorkedIMG={exercise.musclesWorkedIMG}
+            muscleGroup={exercise.muscleGroup}
+            routineGroup={exercise.routineGroup}
+            musclesWorked={exercise.musclesWorked}
+            instructions={exercise.instructions}
+            benefits={exercise.benefits}
+            commonMistakes={exercise.commonMistakes}
+            onViewDetails={() => onViewDetails(exercise)}
+          />
         ))}
       </div>
     );
@@ -58,7 +48,7 @@ const Slider: React.FC<SliderProps> = ({ onViewDetails }) => {
 
   return (
     <div className="relative flex flex-col items-center justify-center w-full">
-      <div className=" flex items-center w-full">
+      <div className="flex items-center w-full">
         <button
           onClick={handlePrevSlide}
           className="text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute left-[-100px] z-10">
