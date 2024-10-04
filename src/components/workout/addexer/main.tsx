@@ -39,10 +39,20 @@ const Main = () => {
   const [selectedCard, setSelectedCard] = useState<ExerciseDetails | null>(null);
   const popupRef = useRef<HTMLDivElement | null>(null);
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedOption, setSelectedOption] = useState('All');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
   const handleViewDetails = (exercise: ExerciseDetails) => {
     setSelectedCard(exercise);
     setShowPopup(true);
     setClosingPopup(false);
+  };
+
+  const handleSearch = (query: string, option: string, order: 'asc' | 'desc') => {
+    setSearchQuery(query);
+    setSelectedOption(option);
+    setSortOrder(order);
   };
 
   const handleClosePopup = () => {
@@ -70,10 +80,10 @@ const Main = () => {
   }, [showPopup]);
   return (
     <main className="px-6 md:px-20">
-      <h1 className="text-black text-[32px] md:text-[40px] font-bold font-['Inter']">Add Exercises</h1>
-      <div className="flex flex-col justify-center items-center">
-        <Search />
-        <Slider onViewDetails={handleViewDetails} />
+      <h1 className="text-black text-[32px] md:text-[40px] font-bold font-['Inter'] pt-3">Add Exercises</h1>
+      <div className="flex flex-col justify-center items-center gap-4">
+        <Search onSearch={handleSearch} />
+        <Slider onViewDetails={handleViewDetails} searchQuery={searchQuery} selectedOption={selectedOption} sortOrder={sortOrder}/>
       </div>
 
       {showPopup && selectedCard && (

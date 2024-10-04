@@ -31,7 +31,7 @@ const MuscleGroupPage = () => {
         {pathHistory[pathHistory.length - 1] || 'Home'}
       </p>
       <h1 className=" text-black text-[58.63px] font-extrabold font-['Inter'] leading-[52.77px] px-10 pb-10 mt-[-20px]">{capitalizedMuscle} EXERCISES</h1>
-      <section className=" w-screen h-[366px] relative bg-[#ccff00] border border-black">
+      <section className=" w-screen h-[390px] relative bg-[#ccff00] border border-black">
       <Main />
       </section>
       <section className=" w-screen m-20">

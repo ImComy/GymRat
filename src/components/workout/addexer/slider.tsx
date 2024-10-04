@@ -1,14 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from './card';
-import { exercises } from '../../../app/workouts/objects';
+import { exercises as allExercises } from '../../../app/workouts/objects';
 
 interface SliderProps {
+  searchQuery: string;
+  selectedOption: string;
+  sortOrder: 'asc' | 'desc';
   onViewDetails: (exercise: any) => void;
 }
 
-const Slider: React.FC<SliderProps> = ({ onViewDetails }) => {
+const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder, onViewDetails }) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const numSlides = Math.ceil(exercises.length / 6);
+  const [filteredExercises, setFilteredExercises] = useState(allExercises);
+
+  useEffect(() => {
+    let filtered = allExercises.filter((exercise) => {
+      const matchesOption =
+        selectedOption === 'All' || exercise.type.toLowerCase() === selectedOption.toLowerCase();
+      const matchesQuery = exercise.name.toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesOption && matchesQuery;
+    });
+
+    filtered = filtered.sort((a, b) => {
+      if (sortOrder === 'asc') {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+
+    setFilteredExercises(filtered);
+    setCurrentSlide(0);
+  }, [searchQuery, selectedOption, sortOrder]);
+
+  const numSlides = Math.ceil(filteredExercises.length / 6);
 
   const handlePrevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? numSlides - 1 : prev - 1));
@@ -20,7 +45,7 @@ const Slider: React.FC<SliderProps> = ({ onViewDetails }) => {
 
   const renderCardsForSlide = (slideIndex: number) => {
     const startIndex = slideIndex * 6;
-    const selectedExercises = exercises.slice(startIndex, startIndex + 6);
+    const selectedExercises = filteredExercises.slice(startIndex, startIndex + 6);
 
     return (
       <div className="grid grid-cols-3 gap-4">
@@ -51,7 +76,7 @@ const Slider: React.FC<SliderProps> = ({ onViewDetails }) => {
       <div className="flex items-center w-full">
         <button
           onClick={handlePrevSlide}
-          className="text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute left-[-100px] z-10">
+          className="text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute left-[-90px] z-10">
           <span className="nf nf-fa-angle_left"></span>
         </button>
         <div className="flex transition-transform duration-500 ease-in-out w-full space-x-8 gap-20 ml-5" style={{ transform: `translateX(-${currentSlide * 109.5}%)` }}>
@@ -67,7 +92,7 @@ const Slider: React.FC<SliderProps> = ({ onViewDetails }) => {
           <span className="nf nf-fa-angle_right"></span>
         </button>
       </div>
-      <div className="absolute bottom-[-50px] flex space-x-2 z-5">
+      <div className="absolute bottom-[-35px] flex space-x-2 z-5">
         {Array.from({ length: numSlides }).map((_, index) => (
           <button
             key={index}
