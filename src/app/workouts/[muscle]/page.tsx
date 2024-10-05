@@ -3,7 +3,9 @@
 import { usePathname, useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Main from '../../../components/workout/addexer/main'
-import ExerciseCard from '../../../components/workout/card'
+import RoutineList from '../../../components/workout/routineList'
+import { Provider } from 'react-redux';
+import store from '../../store';
 
 const capitalizeEachSegment = (path: string) => {
   return path
@@ -26,6 +28,7 @@ const MuscleGroupPage = () => {
   }, [pathname]);
 
   return (
+    <Provider store={store}>
     <main className='bg-white w-screen min-h-screen relative flex flex-col overflow-hidden'>
       <p className="text-[#515151] text-[22px] font-medium font-['Roboto'] leading-relaxed tracking-wide  p-10">
         {pathHistory[pathHistory.length - 1] || 'Home'}
@@ -34,10 +37,11 @@ const MuscleGroupPage = () => {
       <section className=" w-screen h-[390px] relative bg-[#ccff00] border border-black">
       <Main />
       </section>
-      <section className=" w-screen m-20">
-        <ExerciseCard />
+      <section className=" w-screen my-10">
+        <RoutineList />
       </section>
     </main>
+    </Provider>
   );
 };
 

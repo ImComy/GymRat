@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import mealReducer from './mealSlice';
+import workoutReducer from './workoutslice';
 
 const store = configureStore({
   reducer: {
     meals: mealReducer,
+    workouts: workoutReducer,
   },
 });
 

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, IconButton} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import BasicLineChart from '../graph';
+import { useDispatch, useSelector } from 'react-redux';
+import { uncheckWorkout } from '../../app/workoutslice';
+import { RootState } from '../../app/store';
 
 interface Set {
   id: number;
@@ -14,22 +17,39 @@ interface HistoryEntry {
   sets: Set[];
 }
 
-const ExerciseCard: React.FC = () => {
+interface Exercise {
+  name: string;
+  type: string;
+  isChecked: boolean;
+  youtubeLink: string;
+  imageUrl: string;
+  musclesWorkedIMG: string;
+  muscleGroup: string;
+  routineGroup: string;
+}
+
+interface ExerciseCardProps {
+  id: string;
+  name: string;
+  img: string;
+}
+
+const ExerciseCard: React.FC<ExerciseCardProps> = ({ id, name, img }) => {
   const [numSets, setNumSets] = useState<number>(3);
   const [sets, setSets] = useState<Set[]>([
     { id: 1, reps: '', weight: '' },
     { id: 2, reps: '', weight: '' },
     { id: 3, reps: '', weight: '' },
   ]);
-const [history, setHistory] = useState<HistoryEntry[]>([
-  {
-    date: new Date('2023-09-01').toLocaleDateString(),
-    sets: [
-      { id: 1, reps: '10', weight: '40' },
-      { id: 2, reps: '8', weight: '42' },
-      { id: 3, reps: '6', weight: '45' },
-    ],
-  },
+  const [history, setHistory] = useState<HistoryEntry[]>([
+    {
+      date: new Date('2023-09-01').toLocaleDateString(),
+      sets: [
+        { id: 1, reps: '10', weight: '40' },
+        { id: 2, reps: '8', weight: '42' },
+        { id: 3, reps: '6', weight: '45' },
+      ],
+    },
   {
     date: new Date('2023-09-03').toLocaleDateString(),
     sets: [
@@ -134,12 +154,20 @@ const [history, setHistory] = useState<HistoryEntry[]>([
       { id: 3, reps: '8', weight: '55' },
     ],
   },
-]);
+  ]);
 
   const [open, setOpen] = useState(false);
   const [viewMore, setViewMore] = useState(false);
   const [visibleRows, setVisibleRows] = useState(5);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isFinsihed, setisFinsihed] = useState(false);
+  const dispatch = useDispatch();
+
+  const isChecked = useSelector((state: RootState) =>
+    state.workouts.workouts.find(workout => workout._id === id)?.isChecked
+  );
+  const handleRemove = () => {
+    dispatch(uncheckWorkout(id));
+  };
 
   const handleNumSetsChange = (value: string) => {
     const newNumSets = parseInt(value) || 0;
@@ -166,9 +194,9 @@ const [history, setHistory] = useState<HistoryEntry[]>([
     const validSets = sets.filter(set => set.reps && set.weight);
     if (validSets.length === 0) return;
 
-    setIsChecked(true);
+    setisFinsihed(true);
     setTimeout(() => {
-      setIsChecked(false);
+      setisFinsihed(false);
     }, 1000);
 
     setHistory(prev => [...prev, { date, sets: validSets }]);
@@ -207,17 +235,17 @@ const [history, setHistory] = useState<HistoryEntry[]>([
     <main className="max-w-[398px] bg-white rounded-lg shadow font-['Inter']">
       <header className="relative">
         <div className="bg-[#ccff00] h-11 flex items-center justify-between rounded-t-lg">
-          <h2 className="text-black text-lg font-extrabold ml-4">INCLINE DUMBBELL BENCH PRESS</h2>
-          <button onClick={handleFinishExercise} className={`p-2 px-3 w-12 h-11 flex justify-center items-center text-xl rounded-tr-lg transition-colors duration-500 ease-in-out transform ${isChecked ? 'bg-green-600' : 'bg-black hover:bg-red-600'}`}>
-            <span className={`absolute transition-all duration-500 ease-in-out transform ${isChecked ? 'opacity-100 scale-125' : 'opacity-0 scale-0'}`}>✔️</span>
-            <span className={`absolute transition-all duration-500 ease-in-out transform ${isChecked ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
+          <h2 className="text-black text-lg font-extrabold ml-4">{name}</h2>
+          <button onClick={() => {handleFinishExercise(); handleRemove();}} className={`p-2 px-3 w-12 h-11 flex justify-center items-center text-xl rounded-tr-lg transition-colors duration-500 ease-in-out transform ${isFinsihed ? 'bg-green-600' : 'bg-black hover:bg-red-600'}`}>
+            <span className={`absolute transition-all duration-500 ease-in-out transform ${isFinsihed ? 'opacity-100 scale-125' : 'opacity-0 scale-0'}`}>✔️</span>
+            <span className={`absolute transition-all duration-500 ease-in-out transform ${isFinsihed ? 'opacity-0 scale-0' : 'opacity-100 scale-100'}`}>
               <i className="nf nf-md-trash_can_outline"></i>
             </span>
           </button>
         </div>
         <img
           className="w-full h-[238px] object-cover"
-          src="https://via.placeholder.com/398x238"
+          src={img}
           alt="Exercise"
         />
       </header>

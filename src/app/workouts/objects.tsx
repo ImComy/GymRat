@@ -19,6 +19,7 @@ interface CommonMistake {
 }
 
 interface Exercise {
+  _id: string;
   name: string;
   type: string;
   isChecked: boolean;
@@ -35,9 +36,10 @@ interface Exercise {
 
 const exercises: Exercise[] = [
   {
+    _id: "1",
     name: "Bench Press",
     type: "Dumbbell",
-    isChecked: false,
+    isChecked: true,
     youtubeLink: "https://www.youtube.com/embed/your_video_id",
     imageUrl: "/image.png",
     musclesWorkedIMG: "https://via.placeholder.com/492x292",
@@ -66,6 +68,7 @@ const exercises: Exercise[] = [
     ]
   },
   {
+    _id: "2",
     name: "Squat",
     type: "Bodyweight",
     isChecked: false,
@@ -97,6 +100,7 @@ const exercises: Exercise[] = [
     ]
   },
   {
+    _id: "3",
     name: "Deadlift",
     type: "Barbell",
     isChecked: false,
@@ -128,6 +132,7 @@ const exercises: Exercise[] = [
     ]
   },
   {
+    _id: "4",
     name: "Pull-Up",
     type: "Bodyweight",
     isChecked: false,
@@ -159,6 +164,7 @@ const exercises: Exercise[] = [
     ]
   },
   {
+    _id: "5",
     name: "Lunges",
     type: "Bodyweight",
     isChecked: false,
@@ -190,6 +196,7 @@ const exercises: Exercise[] = [
     ]
   },
   {
+    _id: "6",
     name: "Shoulder Press",
     type: "Dumbbell",
     isChecked: false,
@@ -221,6 +228,7 @@ const exercises: Exercise[] = [
     ]
   },
   {
+    _id: "7",
     name: "Plank",
     type: "Bodyweight",
     isChecked: false,
@@ -252,6 +260,7 @@ const exercises: Exercise[] = [
     ]
   },
   {
+    _id: "8",
     name: "Bicycle Crunch",
     type: "Bodyweight",
     isChecked: false,

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Card from './card';
-import { exercises as allExercises } from '../../../app/workouts/objects';
+import { RootState } from '../../../app/store';
+import { useSelector } from 'react-redux';
 
 interface SliderProps {
   searchQuery: string;
@@ -9,12 +10,14 @@ interface SliderProps {
   onViewDetails: (exercise: any) => void;
 }
 
+
 const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder, onViewDetails }) => {
+  const exercise = useSelector((state: RootState) => state.workouts.workouts);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-  const [filteredExercises, setFilteredExercises] = useState(allExercises);
+  const [filteredExercises, setFilteredExercises] = useState(exercise);
 
   useEffect(() => {
-    let filtered = allExercises.filter((exercise) => {
+    let filtered = exercise.filter((exercise) => {
       const matchesOption =
         selectedOption === 'All' || exercise.type.toLowerCase() === selectedOption.toLowerCase();
       const matchesQuery = exercise.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -52,6 +55,7 @@ const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder,
         {selectedExercises.map((exercise, index) => (
           <Card
             key={index}
+            _id={exercise._id}
             name={exercise.name}
             type={exercise.type}
             isChecked={exercise.isChecked}
@@ -76,10 +80,10 @@ const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder,
       <div className="flex items-center w-full">
         <button
           onClick={handlePrevSlide}
-          className="text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute left-[-90px] z-10">
+          className="hidden sm:block text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute left-[-90px] z-10">
           <span className="nf nf-fa-angle_left"></span>
         </button>
-        <div className="flex transition-transform duration-500 ease-in-out w-full space-x-8 gap-20 ml-5" style={{ transform: `translateX(-${currentSlide * 109.5}%)` }}>
+        <div className="flex transition-transform duration-500 ease-in-out w-full space-x-8 gap-20 ml-5 overflow-x-auto sm:overflow-visible sm:transform sm:translate-x-0" style={{ transform: `translateX(-${currentSlide * 109.5}%)` }}>
           {Array.from({ length: numSlides }).map((_, index) => (
             <div key={index} className="w-full flex-shrink-0">
               {renderCardsForSlide(index)}
@@ -88,11 +92,11 @@ const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder,
         </div>
         <button
           onClick={handleNextSlide}
-          className="text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute right-[-90px] z-10">
+          className="hidden sm:block text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute right-[-90px] z-10">
           <span className="nf nf-fa-angle_right"></span>
         </button>
       </div>
-      <div className="absolute bottom-[-35px] flex space-x-2 z-5">
+      <div className="hidden sm:block absolute bottom-[-35px] flex space-x-2 z-5">
         {Array.from({ length: numSlides }).map((_, index) => (
           <button
             key={index}
