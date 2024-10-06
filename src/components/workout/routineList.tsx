@@ -1,19 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ExerciseCard from './card';
 import { RootState } from '../../app/store';
 import { checkWorkout } from '../../app/workoutslice';
+import { usePathname } from 'next/navigation';
 
 const RoutineList: React.FC = () => {
   const workouts = useSelector((state: RootState) => state.workouts.workouts);
   const dispatch = useDispatch();
+  const pathname = usePathname();
+  const [filteredWorkouts, setFilteredWorkouts] = useState(workouts);
 
-  const addedWorkouts = workouts.filter(workout => workout.isChecked);
+  useEffect(() => {
+    const pathSegments = pathname.split('/');
+    const muscleGroup = pathSegments[2] || 'All';
+
+    const filtered = workouts.filter(workout => {
+      if (muscleGroup === 'All') return workout.isChecked;
+      return workout.muscleGroup.toLowerCase() === muscleGroup.toLowerCase() && workout.isChecked;
+    });
+
+    setFilteredWorkouts(filtered);
+  }, [pathname, workouts]);
 
   return (
     <main className="flex flex-wrap gap-10 justify-center">
-      {addedWorkouts.length > 0 ? (
-        addedWorkouts.map(workout => (
+      {filteredWorkouts.length > 0 ? (
+        filteredWorkouts.map(workout => (
           <ExerciseCard
             key={workout._id}
             id={workout._id}
@@ -23,7 +36,7 @@ const RoutineList: React.FC = () => {
         ))
       ) : (
         <div className="text-center text-gray-500 text-lg mx-auto">
-          No workouts have been added yet. Please add workouts to see them here.
+          No workouts have been added yet for this muscle group.
         </div>
       )}
     </main>

@@ -24,12 +24,13 @@ const Workouts = () => {
   }, [pathname]);
 
   const muscleGroups = [
-    { label: 'LEGS', image: '/maxresdefault.png', href: '/workouts/legs' },
-    { label: 'BACK', image: '/maxresdefault.png', href: '/workouts/back' },
-    { label: 'ARMS', image: '/maxresdefault.png', href: '/workouts/arms' },
+    { label: 'All Body', image: '/maxresdefault.png', href: '/workouts/All' },
     { label: 'CHEST', image: '/maxresdefault.png', href: '/workouts/chest' },
+    { label: 'BACK', image: '/maxresdefault.png', href: '/workouts/back' },
+    { label: 'DELTS', image: '/maxresdefault.png', href: '/workouts/delts' },
     { label: 'ABS', image: '/maxresdefault.png', href: '/workouts/abs' },
-    { label: 'DELTS', image: '/maxresdefault.png', href: '/workouts/delts' }
+    { label: 'ARMS', image: '/maxresdefault.png', href: '/workouts/arms' },
+    { label: 'LEGS', image: '/maxresdefault.png', href: '/workouts/legs' },
   ];
 
   return (

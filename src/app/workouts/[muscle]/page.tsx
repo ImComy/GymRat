@@ -38,6 +38,7 @@ const MuscleGroupPage = () => {
       <Main />
       </section>
       <section className=" w-screen my-10">
+        <h1 className=" text-black text-[58.63px] font-extrabold font-['Inter'] leading-[52.77px] px-10 pb-10">Today's Routine</h1>
         <RoutineList />
       </section>
     </main>

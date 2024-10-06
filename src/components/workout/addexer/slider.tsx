@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Card from './card';
 import { RootState } from '../../../app/store';
 import { useSelector } from 'react-redux';
+import { usePathname } from 'next/navigation';
 
 interface SliderProps {
   searchQuery: string;
@@ -10,18 +11,28 @@ interface SliderProps {
   onViewDetails: (exercise: any) => void;
 }
 
-
 const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder, onViewDetails }) => {
   const exercise = useSelector((state: RootState) => state.workouts.workouts);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [filteredExercises, setFilteredExercises] = useState(exercise);
+  const [muscleGroupFromPath, setMuscleGroupFromPath] = useState<string>('All');
+
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const pathSegments = pathname.split('/');
+    const muscleGroup = pathSegments[2] || 'All';
+    setMuscleGroupFromPath(muscleGroup);
+  }, [pathname]);
 
   useEffect(() => {
     let filtered = exercise.filter((exercise) => {
+      const matchesMuscleGroup =
+        muscleGroupFromPath === 'All' || exercise.muscleGroup.toLowerCase() === muscleGroupFromPath.toLowerCase();
       const matchesOption =
         selectedOption === 'All' || exercise.type.toLowerCase() === selectedOption.toLowerCase();
       const matchesQuery = exercise.name.toLowerCase().includes(searchQuery.toLowerCase());
-      return matchesOption && matchesQuery;
+      return matchesMuscleGroup && matchesOption && matchesQuery;
     });
 
     filtered = filtered.sort((a, b) => {
@@ -34,7 +45,7 @@ const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder,
 
     setFilteredExercises(filtered);
     setCurrentSlide(0);
-  }, [searchQuery, selectedOption, sortOrder]);
+  }, [searchQuery, selectedOption, sortOrder, muscleGroupFromPath, exercise]);
 
   const numSlides = Math.ceil(filteredExercises.length / 6);
 
@@ -77,34 +88,51 @@ const Slider: React.FC<SliderProps> = ({ searchQuery, selectedOption, sortOrder,
 
   return (
     <div className="relative flex flex-col items-center justify-center w-full">
-      <div className="flex items-center w-full">
-        <button
-          onClick={handlePrevSlide}
-          className="hidden sm:block text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute left-[-90px] z-10">
-          <span className="nf nf-fa-angle_left"></span>
-        </button>
-        <div className="flex transition-transform duration-500 ease-in-out w-full space-x-8 gap-20 ml-5 overflow-x-auto sm:overflow-visible sm:transform sm:translate-x-0" style={{ transform: `translateX(-${currentSlide * 109.5}%)` }}>
-          {Array.from({ length: numSlides }).map((_, index) => (
-            <div key={index} className="w-full flex-shrink-0">
-              {renderCardsForSlide(index)}
+      {filteredExercises.length > 0 ? (
+        <>
+          <div className="flex items-center w-full">
+            {numSlides > 1 && (
+              <button
+                onClick={handlePrevSlide}
+                className="hidden sm:block text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute left-[-90px] z-10">
+                <span className="nf nf-fa-angle_left"></span>
+              </button>
+            )}
+            <div
+              className="flex transition-transform duration-500 ease-in-out w-full space-x-8 gap-20 ml-5 overflow-x-auto sm:overflow-visible sm:transform sm:translate-x-0"
+              style={{ transform: `translateX(-${currentSlide * 109.5}%)` }}
+            >
+              {Array.from({ length: numSlides }).map((_, index) => (
+                <div key={index} className="w-full flex-shrink-0">
+                  {renderCardsForSlide(index)}
+                </div>
+              ))}
             </div>
-          ))}
+            {numSlides > 1 && (
+              <button
+                onClick={handleNextSlide}
+                className="hidden sm:block text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute right-[-90px] z-10">
+                <span className="nf nf-fa-angle_right"></span>
+              </button>
+            )}
+          </div>
+          <div className="hidden sm:block absolute bottom-[-35px] flex space-x-2 z-5">
+            {Array.from({ length: numSlides }).map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-transform duration-300 ease-in-out ${
+                  currentSlide === index ? 'bg-gray-800 scale-125' : 'bg-gray-400'
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="text-center text-gray-500 text-lg mx-auto">
+          No workouts have been added to this category yet. we're still on it!
         </div>
-        <button
-          onClick={handleNextSlide}
-          className="hidden sm:block text-[50px] font-bold text-gray-400 px-4 py-2 rounded-md absolute right-[-90px] z-10">
-          <span className="nf nf-fa-angle_right"></span>
-        </button>
-      </div>
-      <div className="hidden sm:block absolute bottom-[-35px] flex space-x-2 z-5">
-        {Array.from({ length: numSlides }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-transform duration-300 ease-in-out ${currentSlide === index ? 'bg-gray-800 scale-125' : 'bg-gray-400'}`}
-          />
-        ))}
-      </div>
+      )}
     </div>
   );
 };
