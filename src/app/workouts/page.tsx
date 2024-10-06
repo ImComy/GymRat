@@ -3,28 +3,18 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-const capitalizeEachSegment = (path: string) => {
-  return path
-    .split('/')
-    .filter(Boolean)
-    .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join('/');
-};
+import NewSave from '../../components/workout/save';
+import Path from '../../components/path';
 
 const Workouts = () => {
-  const pathname = usePathname();
-  const [pathHistory, setPathHistory] = useState<string[]>([]);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const formattedPath = pathname === '/' ? 'Home' : `Home/${capitalizeEachSegment(pathname.slice(1))}`;
-    setPathHistory((prev) => [...prev, formattedPath]);
     setTimeout(() => setIsVisible(true), 80);
-  }, [pathname]);
+  }, []);
 
   const muscleGroups = [
-    { label: 'All Body', image: '/maxresdefault.png', href: '/workouts/All' },
+    { label: 'All', image: '/maxresdefault.png', href: '/workouts/All' },
     { label: 'CHEST', image: '/maxresdefault.png', href: '/workouts/chest' },
     { label: 'BACK', image: '/maxresdefault.png', href: '/workouts/back' },
     { label: 'DELTS', image: '/maxresdefault.png', href: '/workouts/delts' },
@@ -56,10 +46,7 @@ const Workouts = () => {
           opacity: 1;
         }
       `}</style>
-
-      <p className="text-[#515151] text-[18px] md:text-[22px] font-medium font-['Roboto'] leading-relaxed tracking-wide">
-        {pathHistory[pathHistory.length - 1]}
-      </p>
+      <Path />
 
       <h1 className="text-black font-black font-['Inter'] mb-8 leading-tight text-[28px] sm:text-[40px] md:text-[60px] lg:text-[80px]">
         Choose a muscle group
@@ -84,6 +71,12 @@ const Workouts = () => {
           </Link>
         ))}
       </div>
+      <section>
+        <div className="flex justify-between items-center md:flex-row flex-col">
+          <h1 className="text-black font-black font-['Inter'] my-10 leading-tight text-[48px] xl:text-[60px]">Saved Routines</h1>
+          <NewSave />
+        </div>
+      </section>
     </main>
   );
 };

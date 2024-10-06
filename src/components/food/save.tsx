@@ -119,8 +119,8 @@ const SaveMeals = () => {
                 <button
                   key={meal}
                   onClick={() => handleMealClick(meal)}
-                  className={`w-full h-[45px] rounded-md shadow-md flex items-center justify-center text-sm font-semibold transition-transform hover:scale-105
-                    ${selectedMeal === meal ? 'bg-[#99ff00] text-white' : 'bg-white text-black'}`}
+                  className={`w-full h-[45px] rounded-md shadow-lg hover:shadow-[#ccff00] flex items-center justify-center text-sm font-semibold transition-transform hover:scale-105
+                    ${selectedMeal === meal ? 'bg-[#ccff00] text-white' : 'bg-gray-200 text-gray-700'}`}
                 >
                   {meal}
                 </button>
@@ -132,8 +132,8 @@ const SaveMeals = () => {
                 <button
                   key={meal}
                   onClick={() => handleMealClick(meal)}
-                  className={`w-full h-[45px] rounded-md shadow-md flex items-center justify-center text-sm font-semibold transition-transform hover:scale-105
-                    ${selectedMeal === meal ? 'bg-[#99ff00] text-white' : 'bg-white text-black'}`}
+                  className={`w-full h-[45px] rounded-md shadow-lg hover:shadow-[#ccff00] flex items-center justify-center text-sm font-semibold transition-transform hover:scale-105
+                    ${selectedMeal === meal ? 'bg-[#ccff00] text-white' : 'bg-gray-200 text-gray-700'}`}
                 >
                   {meal}
                 </button>

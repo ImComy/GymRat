@@ -1,45 +1,21 @@
+// Your existing Food component file
 "use client";
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Slider from '../../../components/food/slider';
 import MealCardList from '../../../components/food/MealCardList';
-import mealCardsArray from '../../../components/food/objects';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import SearchFood from '../../../components/food/search';
 import SaveMeals from '../../../components/food/save';
-
-interface Card {
-  _id: string;
-  src: string;
-  title: string;
-  isProfilePage: boolean;
-}
-
-const capitalizeEachSegment = (path: string) => {
-  return path
-    .split('/')
-    .filter(Boolean)
-    .map(segment => (segment.charAt(0).toUpperCase() + segment.slice(1)).replace(/-/g, ' '))
-    .join('/');
-};
+import Path from '../../../components/path';
 
 const Food = () => {
-  const pathname = usePathname();
-  const [pathHistory, setPathHistory] = useState<string[]>([]);
-  const [isVisible, setIsVisible] = useState(false);
-
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedOption, setSelectedOption] = useState('All');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-
-  useEffect(() => {
-    const formattedPath = pathname === '/' ? 'Home' : `Home/${capitalizeEachSegment(pathname.slice(1))}`;
-    setPathHistory((prev) => [...prev, formattedPath]);
-    setTimeout(() => setIsVisible(true), 80);
-  }, [pathname]);
 
   const handleSearch = (query: string, option: string, order: 'asc' | 'desc') => {
     setSearchQuery(query);
@@ -51,9 +27,7 @@ const Food = () => {
     <Provider store={store}>
       <main className="bg-white w-screen p-10 overflow-hidden">
         <header>
-          <p className="text-[#515151] text-[18px] md:text-[22px] font-medium font-['Roboto'] leading-relaxed tracking-wide">
-            {pathHistory[pathHistory.length - 1]}
-          </p>
+          <Path />
           <h1 className="text-black text-[50px] md:text-[80px] font-black font-['Inter'] leading-[56px] md:leading-[72px] sm:text-[60px] sm:leading-[44px]">
             Food
           </h1>

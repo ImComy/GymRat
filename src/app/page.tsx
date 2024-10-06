@@ -70,7 +70,7 @@ export default function Home() {
 
 
   return (
-    <main className="w-full min-h-screen relative">
+    <main className="w-screen min-h-screen relative">
       <header
         className={`relative w-screen h-screen bg-cover bg-center invisible ${
           animateHeader ? "fade-in" : ""
@@ -293,28 +293,28 @@ export default function Home() {
 
       <style jsx>{`
         .slide-in-right-1 {
-          animation: slideInRight 1.5s ease-in-out forwards;
-          animation-delay: 1s;
+          animation: slideInRight 1s ease-in-out forwards;
+          animation-delay: 0.6s;
         }
         .slide-in-right-2 {
-          animation: slideInRight 1.5s ease-in-out forwards;
-          animation-delay: 1.4s;
+          animation: slideInRight 1s ease-in-out forwards;
+          animation-delay: 0.6s;
         }
         .slide-in-right-3 {
-          animation: slideInRight 1.5s ease-in-out forwards;
-          animation-delay: 1.6s;
+          animation: slideInRight 1s ease-in-out forwards;
+          animation-delay: 0.6s;
         }
         .slide-in-left-1 {
-          animation: slideInLeft 1.5s ease-in-out forwards;
-          animation-delay: 1s;
+          animation: slideInLeft 1s ease-in-out forwards;
+          animation-delay: 0.6s;
         }
         .slide-in-left-2 {
-          animation: slideInLeft 1.5s ease-in-out forwards;
-          animation-delay: 1.4s;
+          animation: slideInLeft 1s ease-in-out forwards;
+          animation-delay: 0.6s;
         }
         .slide-in-left-3 {
-          animation: slideInLeft 1.5s ease-in-out forwards;
-          animation-delay: 1.6s;
+          animation: slideInLeft 1s ease-in-out forwards;
+          animation-delay: 0.6s;
         }
         .hover-effect {
           transition: transform 0.3s ease-in-out;
@@ -323,17 +323,17 @@ export default function Home() {
           transform: scale(1.05) rotate(3deg) translateY(-10px);
         }
         .fade-in {
-          animation: fadeIn 2s ease-in-out forwards;
+          animation: fadeIn 1s ease-in-out forwards;
         }
         .slide-up {
-          animation: slideUp 1.5s ease-out forwards;
+          animation: slideUp 1s ease-out forwards;
         }
         .slide-in-right {
-          animation: slideInRight 1.5s ease-in-out forwards;
+          animation: slideInRight 1s ease-in-out forwards;
         }
         .slide-in-left {
-          animation: slideInLeft 1.5s ease-in-out forwards;
-          animation-delay: 1.6s;
+          animation: slideInLeft 1s ease-in-out forwards;
+          animation-delay: 0.6s;
         }
         @keyframes hover-slide-up {
           0% {
