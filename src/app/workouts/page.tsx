@@ -4,7 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import NewSave from '../../components/workout/save';
+import SavedWorkouts from '../../components/workout/savelist';
+import RoutineList from '../../components/workout/routineList';
 import Path from '../../components/path';
+import { Provider } from 'react-redux';
+import store from '../store';
 
 const Workouts = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,7 +27,14 @@ const Workouts = () => {
     { label: 'LEGS', image: '/maxresdefault.png', href: '/workouts/legs' },
   ];
 
+const workouts = [
+  { name: 'Leg Day Routine', type: 'Strength', date: '2024-09-28' },
+  { name: 'HIIT Session', type: 'Cardio', date: '2024-10-01' },
+  { name: 'Upper Body Workout', type: 'Strength', date: '2024-09-30' },
+];
+
   return (
+    <Provider store={store}>
     <main className="bg-white w-screen min-h-screen relative flex flex-col p-4 md:p-10">
       <style jsx>{`
         @keyframes fadeInUp {
@@ -74,10 +85,21 @@ const Workouts = () => {
       <section>
         <div className="flex justify-between items-center md:flex-row flex-col">
           <h1 className="text-black font-black font-['Inter'] my-10 leading-tight text-[48px] xl:text-[60px]">Saved Routines</h1>
-          <NewSave />
+          <div className="mr-0 md:mr-[-40px]">
+            <NewSave />
+          </div>
         </div>
       </section>
+      <div className="flex flex-col md:flex-row w-full gap-0 md:gap-5">
+        <div className="flex-grow">
+          <RoutineList />
+        </div>
+        <div className="w-full md:w-72 flex justify-center md:justify-start">
+          <SavedWorkouts workouts={workouts} />
+        </div>
+      </div>
     </main>
+    </Provider>
   );
 };
 
