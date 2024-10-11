@@ -142,8 +142,9 @@ export default function Home() {
         </div>
 
         <div className="z-[1] w-screen ">
-          <div className="absolute top-[-40%] right-[120%] sm:top-[-10%]  sm:right-[58.5%]">
-            <svg width="850" height="700" viewBox="0 0 979 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-[-20px] left-[-50px]">
+          <div className="absolute top-[-40%] right-[120%] sm:top-[-30%] sm:right-[58.5%] md:right-[58.5%] lg:right-[50%] xl:right-[40%] 2xl:right-[30%]">
+
+            <svg width="850" height="710" viewBox="0 0 979 600" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute top-[-20px] left-[-50px]">
             <path d="M1138 21.0454C1081.45 6.36947 943.178 -11.4813 842.475 34.5234C716.595 92.0292 615.308 347.661 471.505 351.255C423.015 410.258 296.941 528.894 180.565 531.41C35.0951 534.555 64.2725 652.262 3 690" stroke="#CCFF00" strokeWidth="9"/>
             </svg>
 
@@ -254,14 +255,14 @@ export default function Home() {
         </div>
 
         <div className="z-1 w-screen ">
-          <div className="absolute top-0 right-20 sm:top-auto sm:right-auto">
+          <div className="absolute top-0 right-20 sm:top-0 sm:right-20 md:top-auto md:right-auto">
             <svg width="1305" height="584" viewBox="0 0 1005 584" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute sm:block right-[-800px]">
               <path d="M1003 -1.31488C933.398 -17.4906 763.206 -37.1655 639.257 13.5404C484.319 76.9227 359.651 358.677 182.654 362.638C122.97 427.671 -32.2062 558.43 -175.446 561.203C-354.496 564.67 -318.584 694.405 -394 736" stroke="#CCFF00" strokeWidth="9"/>
             </svg>
             <svg width="1191" height="584" viewBox="0 0 1191 584" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute right-[-900px]">
               <path d="M1212.28 1000.58C1222.72 928.375 1221.69 756.118 1134.12 644.769C1024.66 505.582 628.495 443.633 594.827 269.785C498.431 224.978 298.972 100.167 272.303 -40.6178C238.966 -216.599 71.5127 -153.015 3.88693 -218.435" stroke="#CCFF00" strokeWidth="9" />
             </svg>
-            <svg width="415" height="584" viewBox="0 0 415 584" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute left-[400px]">
+            <svg width="415" height="784" viewBox="0 0 415 584" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute left-[400px]">
               <path d="M853.013 1359.16C881.934 1292.17 925.908 1125.62 870.434 995.276C801.091 832.344 434.829 669.143 447.702 492.533C366.342 424.12 206.372 251.576 217.372 108.71C231.123 -69.8725 52.8778 -52.1973 4.67066 -133" stroke="#CCFF00" strokeWidth="9"/>
             </svg>
           </div>

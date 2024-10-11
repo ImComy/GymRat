@@ -1,4 +1,3 @@
-// Your existing Food component file
 "use client";
 
 import Link from 'next/link';

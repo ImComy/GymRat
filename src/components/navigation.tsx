@@ -129,6 +129,18 @@ export default function Navigation() {
               >
                 <li>
                   <Link
+                    href="/nutritional-Insights/stats"
+                    className="block px-4 py-1 hover:bg-black hover:text-[#ccff00]"
+                    onClick={() => {
+                      closeDropdown();
+                      closeMobileMenu();
+                    }}
+                  >
+                    Stats
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/nutritional-Insights/food"
                     className="block px-4 py-1 hover:bg-black hover:text-[#ccff00]"
                     onClick={() => {
@@ -137,18 +149,6 @@ export default function Navigation() {
                     }}
                   >
                     Food
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#"
-                    className="block px-4 py-1 hover:bg-black hover:text-[#ccff00]"
-                    onClick={() => {
-                      closeDropdown();
-                      closeMobileMenu();
-                    }}
-                  >
-                    Option 2
                   </Link>
                 </li>
               </ul>
