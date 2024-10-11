@@ -27,12 +27,6 @@ const Workouts = () => {
     { label: 'LEGS', image: '/maxresdefault.png', href: '/workouts/legs' },
   ];
 
-const workouts = [
-  { name: 'Leg Day Routine', type: 'Strength', date: '2024-09-28' },
-  { name: 'HIIT Session', type: 'Cardio', date: '2024-10-01' },
-  { name: 'Upper Body Workout', type: 'Strength', date: '2024-09-30' },
-];
-
   return (
     <Provider store={store}>
     <main className="bg-white w-screen min-h-screen relative flex flex-col p-4 md:p-10">
@@ -95,7 +89,7 @@ const workouts = [
           <RoutineList />
         </div>
         <div className="w-full md:w-72 flex justify-center md:justify-start">
-          <SavedWorkouts workouts={workouts} />
+          <SavedWorkouts />
         </div>
       </div>
     </main>

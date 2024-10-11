@@ -20,7 +20,7 @@ const SavedWorkouts: React.FC = () => {
     if (selectedWorkout === workoutName) {
       setSelectedWorkout(null);
       if (selected) {
-        dispatch(checkWorkout(selected));
+        dispatch(checkWorkout(selected.name));
       }
     } else {
       setSelectedWorkout(workoutName);
