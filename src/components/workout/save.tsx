@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../app/store';
+import { createWorkoutCollection, clearAllWorkouts } from '../../app/workoutslice';
 
 const NewSave = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [selectedWorkout, setSelectedWorkout] = useState('');
   const [workoutName, setWorkoutName] = useState('');
+
+  const dispatch = useDispatch();
 
   const handleWorkoutClick = (workout: string) => {
     setSelectedWorkout(workout);
@@ -19,8 +24,18 @@ const NewSave = () => {
   };
 
   const handleSaveWorkout = () => {
-    console.log('Workout saved!');
-    handleClosePopup();
+    if (workoutName && selectedWorkout) {
+      const workoutData = {
+        name: workoutName,
+        type: selectedWorkout,
+        date: new Date().toLocaleDateString(),
+      };
+      dispatch(createWorkoutCollection(workoutData));
+      dispatch(clearAllWorkouts());
+      setWorkoutName('');
+      setSelectedWorkout('');
+      handleClosePopup();
+    }
   };
 
   const handleOutsideClick = (e: React.MouseEvent) => {
@@ -68,9 +83,9 @@ const NewSave = () => {
           }`}
           onClick={handleOutsideClick}
         >
-          <div className="relative w-[428px] h-auto bg-white rounded-lg shadow-2xl popup px-8 py-3 transition-transform duration-300 ease-out transform ${
+          <div className={`relative w-[428px] h-auto bg-white rounded-lg shadow-2xl popup px-8 py-3 transition-transform duration-300 ease-out transform ${
               isClosing ? 'translate-y-full opacity-0' : 'translate-y-0 opacity-100'
-            } mt-[50px]">
+            } mt-[50px]`}>
             <button
               className="absolute top-0 right-[-10px] text-2xl text-gray-500 hover:text-gray-800 transition duration-200 bg-white rounded-full px-2 hover:bg-red-500 z-11"
               onClick={handleClosePopup}

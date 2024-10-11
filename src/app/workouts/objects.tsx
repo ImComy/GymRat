@@ -39,7 +39,7 @@ const exercises: Exercise[] = [
     _id: "1",
     name: "Bench Press",
     type: "Dumbbell",
-    isChecked: true,
+    isChecked: false,
     youtubeLink: "https://www.youtube.com/embed/your_video_id",
     imageUrl: "/image.png",
     musclesWorkedIMG: "https://via.placeholder.com/492x292",

@@ -36,7 +36,7 @@ const RoutineList: React.FC = () => {
         ))
       ) : (
         <div className="text-center text-gray-500 text-lg mx-auto">
-          No workouts have been added yet for this muscle group.
+          No workouts have been added yet.
         </div>
       )}
     </main>

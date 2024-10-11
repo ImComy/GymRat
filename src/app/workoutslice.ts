@@ -38,8 +38,10 @@ interface Exercise {
 }
 
 interface Workout {
-  _id: string;
-  details: Exercise;
+  id: string;
+  name: string;
+  type: string;
+  date: string;
 }
 
 interface SavedWorkoutCollection {
@@ -59,6 +61,8 @@ const initialState: WorkoutState = {
   savedWorkoutsArray: [],
 };
 
+const generateUniqueId = () => Math.random().toString(36).substr(2, 9);
+
 const workoutSlice = createSlice({
   name: 'workouts',
   initialState,
@@ -75,61 +79,51 @@ const workoutSlice = createSlice({
         workout.isChecked = false;
       }
     },
-    createWorkout: (state, action: PayloadAction<Exercise>) => {
-      state.workouts.push(action.payload);
+    createWorkoutCollection: (state, action: PayloadAction<{ name: string; type: string; date: string }>) => {
+      const { name, type, date } = action.payload;
+      state.savedWorkoutsArray.push({
+        name,
+        type,
+        date,
+        workouts: []
+      });
+      console.log('Updated savedWorkoutsArray:', state.savedWorkoutsArray);
     },
-    updateWorkout: (state, action: PayloadAction<Exercise>) => {
-      const index = state.workouts.findIndex(workout => workout._id === action.payload._id);
-      if (index !== -1) {
-        state.workouts[index] = action.payload;
-      }
-    },
-    saveWorkoutCollection: (state, action: PayloadAction<{ name: string; type: string }>) => {
-      const { name, type } = action.payload;
-      const currentDate = new Date().toLocaleDateString();
-
-      const checkedWorkoutIDs = state.workouts
-        .filter(workout => workout.isChecked === true)
-        .map(workout => workout._id);
-
-      if (checkedWorkoutIDs.length > 0) {
-        const existingCollection = state.savedWorkoutsArray.find(
-          collection => collection.name === name && collection.type === type
-        );
-
-        if (existingCollection) {
-          existingCollection.workouts.push(...checkedWorkoutIDs);
-        } else {
-          state.savedWorkoutsArray.push({
-            date: currentDate,
-            name,
-            type,
-            workouts: checkedWorkoutIDs,
-          });
-        }
-      }
-    },
-    summonSavedWorkoutCollection: (
-      state,
-      action: PayloadAction<{ name: string; type: string }>
-    ) => {
-      const { name, type } = action.payload;
-      const savedCollection = state.savedWorkoutsArray.find(
-        collection => collection.name === name && collection.type === type
+    addWorkoutsToCollection: (state, action: PayloadAction<{ name: string;}>) => {
+      const { name } = action.payload;
+      const collection = state.savedWorkoutsArray.find(
+        (collection) => collection.name === name
       );
-
+      if (collection) {
+        const checkedWorkouts = state.workouts.filter(workout => workout.isChecked);
+        console.log('Checked workouts to be added:', checkedWorkouts);
+        collection.workouts.push(...checkedWorkouts.map(workout => workout._id));
+        console.log('Updated collection after adding workouts:', collection);
+      }
+    },
+    summonSavedWorkoutCollection: (state, action: PayloadAction<{ name: string }>) => {
+      const { name } = action.payload;
+      const savedCollection = state.savedWorkoutsArray.find(
+        collection => collection.name === name
+      );
+      state.workouts.forEach(workout => {
+        workout.isChecked = false;
+        console.log(`Workout: ${workout._id}, isChecked: ${workout.isChecked}`);
+      });
       if (savedCollection) {
-        state.workouts.forEach(workout => {
-          workout.isChecked = false;
-        });
-
         savedCollection.workouts.forEach(savedWorkoutId => {
           const workout = state.workouts.find(workout => workout._id === savedWorkoutId);
           if (workout) {
             workout.isChecked = true;
+            console.log(`Checked Workout: ${workout._id}, isChecked: ${workout.isChecked}`);
           }
         });
       }
+    },
+    clearAllWorkouts: (state) => {
+      state.workouts.forEach(workout => {
+        workout.isChecked = false;
+      });
     },
   },
 });
@@ -137,10 +131,10 @@ const workoutSlice = createSlice({
 export const {
   checkWorkout,
   uncheckWorkout,
-  createWorkout,
-  updateWorkout,
-  saveWorkoutCollection,
+  createWorkoutCollection,
+  addWorkoutsToCollection,
   summonSavedWorkoutCollection,
+  clearAllWorkouts,
 } = workoutSlice.actions;
 
 export default workoutSlice.reducer;
