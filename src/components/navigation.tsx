@@ -167,7 +167,7 @@ export default function Navigation() {
 
           <div className="mt-4 lg:mt-0 flex justify-center items-center lg:justify-start">
             <Link
-              href="/login"
+              href="/profile"
               className="w-[5.5rem] h-[2.5rem] px-[1rem] py-[0.5rem] bg-black rounded-[0.625rem] justify-center items-center inline-flex hover:bg-gray-800 hover:scale-105 transition duration-300"
               onClick={closeMobileMenu}
             >

@@ -162,7 +162,6 @@ const Stats: React.FC = () => {
       </header>
 
       <section className="mt-10 flex flex-col lg:flex-row justify-around">
-        {/* Stats Table */}
         <div className="overflow-x-auto shadow-lg rounded-lg bg-white w-full lg:max-w-[600px]">
           <div className="bg-[#ccff00] text-gray-900 w-full rounded-t-lg">
             <p className="px-6 py-4 text-2xl font-semibold">Stats</p>
