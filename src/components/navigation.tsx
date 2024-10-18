@@ -8,6 +8,7 @@ export default function Navigation() {
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
   const dropdownRef = useRef<HTMLLIElement>(null);
 
   const toggleDropdown = (): void => {
@@ -166,15 +167,28 @@ export default function Navigation() {
           </ul>
 
           <div className="mt-4 lg:mt-0 flex justify-center items-center lg:justify-start">
-            <Link
-              href="/profile"
-              className="w-[5.5rem] h-[2.5rem] px-[1rem] py-[0.5rem] bg-black rounded-[0.625rem] justify-center items-center inline-flex hover:bg-gray-800 hover:scale-105 transition duration-300"
-              onClick={closeMobileMenu}
-            >
-              <span className="text-center text-white text-lg font-bold leading-[1.5rem]">
-                Join
-              </span>
-            </Link>
+            {isLoggedIn ? (
+              <Link
+                href="/profile"
+                className=" px-[1rem] py-[0.5rem] bg-black rounded-[0.625rem] justify-center items-center inline-flex hover:bg-gray-800 hover:scale-105 transition duration-300 gap-3"
+                onClick={closeMobileMenu}
+              >
+                <span className="nf nf-fa-user_circle_o text-2xl text-[#ccff00]"></span>
+                <span className="text-center text-white text-md font-bold leading-[1.5rem]">
+                  Ahmed El-Shazly
+                </span>
+              </Link>
+            ) : (
+              <Link
+                href="/signup"
+                className="w-[5.5rem] h-[2.5rem] px-[1rem] py-[0.5rem] bg-black rounded-[0.625rem] justify-center items-center inline-flex hover:bg-gray-800 hover:scale-105 transition duration-300"
+                onClick={closeMobileMenu}
+              >
+                <span className="text-center text-white text-lg font-bold leading-[1.5rem]">
+                  Join
+                </span>
+              </Link>
+            )}
           </div>
         </div>
       </div>
