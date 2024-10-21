@@ -8,7 +8,7 @@ export default function Navigation() {
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLLIElement>(null);
 
   const toggleDropdown = (): void => {
